@@ -34,4 +34,6 @@ deckSchema.set('toJSON', {
      } 
 });
 
-export const deck = mongoose.model('Deck', deckSchema);
+const Deck = mongoose.model('Deck', deckSchema);
+
+export default Deck;

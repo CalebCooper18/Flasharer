@@ -1,6 +1,7 @@
 import express from 'express';
 import config from './utils/config';
 import mongoose from 'mongoose';
+import loginRouter from './routes/loginRoute';
 
 const app = express();
 
@@ -17,9 +18,7 @@ mongoose.connect(config.MONGODB_URI)
 	})
 
 
-app.get('/', (_req, res) => {
-    res.status(200).send('Hello world');
-})
+app.use('/api/login', loginRouter);
 
 
 

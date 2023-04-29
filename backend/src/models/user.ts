@@ -7,9 +7,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength: 2,
     },
-    userName:{
+    username:{
         type: String,
         required: true,
+        unique: true
     },
     hashPassword: {
         type: String,
@@ -31,5 +32,7 @@ userSchema.set('toJSON', {
     }
 });
 
-export const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+export default User;
 
