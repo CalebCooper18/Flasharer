@@ -1,7 +1,7 @@
 import express from 'express';
 import config from './utils/config';
 import mongoose from 'mongoose';
-import loginRouter from './routes/loginRoute';
+import userRouter from './routes/userRoute';
 
 const app = express();
 
@@ -18,7 +18,7 @@ mongoose.connect(config.MONGODB_URI)
 	})
 
 
-app.use('/api/login', loginRouter);
+app.use('/api/user', userRouter);
 
 
 

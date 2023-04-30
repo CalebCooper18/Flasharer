@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt';
 
 
 const userSchema = new mongoose.Schema({
@@ -12,7 +13,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    hashPassword: {
+    password: {
         type: String,
         required: true,
         minLength: 5,
@@ -23,14 +24,27 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+userSchema.pre('save', async function(next) {
+    if(!this.isModified('password'))
+    {
+        return next();
+    }
+    
+    this.password =  await bcrypt.hash(this.password, 10);
+
+    next();
+
+})
+
 userSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString(),
         delete returnedObject._id,
         delete returnedObject.__v,
-        delete returnedObject.hashPassword
+        delete returnedObject.password
     }
 });
+
 
 const User = mongoose.model('User', userSchema);
 
