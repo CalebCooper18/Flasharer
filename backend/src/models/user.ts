@@ -36,6 +36,11 @@ userSchema.pre('save', async function(next) {
 
 })
 
+userSchema.methods.comparePasswords = async function (retrivedPassword: string, userPassword: string)
+{
+    return await bcrypt.compare(retrivedPassword, userPassword);
+}
+
 userSchema.set('toJSON', {
     transform: (_document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString(),

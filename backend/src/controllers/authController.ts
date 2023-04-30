@@ -11,6 +11,14 @@ interface NewUser
    id?: string
 }
 
+interface CreatedUser {
+    name: string,
+    username: string,
+    password: string,
+    cards: Types.ObjectId[],
+    comparePasswords: (password: string, password2: string) => Promise<boolean>;
+}
+
 
 function signToken(id: string)
 {
@@ -65,8 +73,24 @@ async function signUp(req: Request, res: Response)
 }
 
 
-async function login(_req: Request, _res: Response)
+async function login(req: Request, res: Response)
 {
+    const {username, password} = req.body;
+
+    if(!username || !password)
+    {
+        return res.status(400).json('Missing credinitals')
+    }
+
+    const user = (await User.findOne({username}).select('+password')) as CreatedUser | null
+
+
+    if(!user || !await user.comparePasswords(password, user.password))
+    {
+        return res.status(401).json('No account with that username')
+    }
+
+    return createJsonWebToken(user, 200, res);
  
 }
 
