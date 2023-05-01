@@ -1,11 +1,14 @@
 import { IUserDocument } from "../models/user";
-import Deck from "../models/deck";
+import Deck, { IDeck } from "../models/deck";
 import { Request, Response } from "express";
 
+interface INewDeck extends IDeck {
+    user: IUserDocument
+}
 
 async function createDeck(req: Request, res: Response )
 {
-    const {user, topic, cards, shared, tags} = req.body;
+    const {user, topic, cards, shared, tags}: INewDeck  = req.body;
 
     if(!user || !topic || !cards || shared === undefined)
     {
@@ -23,7 +26,7 @@ async function createDeck(req: Request, res: Response )
 
     const newDeck = await deck.save();
 
-    user.decks = user.decks.concat(newDeck.id);
+    user.decks = user.decks?.concat(newDeck.id);
 
     await user.save();
 

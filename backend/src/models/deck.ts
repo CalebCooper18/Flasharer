@@ -1,4 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, {Types, Document} from "mongoose";
+
+export interface IDeck
+{
+     topic: string;
+     likedBy: Types.ObjectId[];
+     likes: number;
+     cards: {
+          front: string;
+          back: string;
+     }[];
+     tags: string[];
+     createdBy: Types.ObjectId;
+     shared: boolean;
+}
+
 
 const deckSchema = new mongoose.Schema({
    topic: {

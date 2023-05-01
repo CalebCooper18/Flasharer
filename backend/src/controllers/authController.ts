@@ -2,7 +2,6 @@ import User, {IUserDocument, IUser} from "../models/user";
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
 
-
 function signToken(id: string)
 {
     return jwt.sign({ id }, process.env.JWT_SECRET as string,{
