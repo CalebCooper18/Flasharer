@@ -1,16 +1,19 @@
 import { Router } from "express";
+import { authToken } from "../utils/middleware";
+import deckController from "../controllers/deckController";
 
 const deckRouter = Router();
 
-deckRouter.get('/decks');
+deckRouter.route('/all')
+.get(deckController.getAllSharedDecks);
 
-deckRouter.route('/deck')
+deckRouter.route('/')
 .get()
-.post()
+.post(authToken, deckController.createDeck);
 
-deckRouter.route('/deck:id')
+deckRouter.route('/:id')
 .get()
 .patch()
-.delete()
+.delete(authToken, deckController.deleteDeck);
 
 export default deckRouter;

@@ -7,7 +7,7 @@ interface NewUser
 {
    name: string,
    username: string,
-   cards: Types.ObjectId[],
+   decks: Types.ObjectId[],
    id?: string
 }
 
@@ -15,7 +15,7 @@ interface CreatedUser {
     name: string,
     username: string,
     password: string,
-    cards: Types.ObjectId[],
+    decks: Types.ObjectId[],
     comparePasswords: (password: string, password2: string) => Promise<boolean>;
 }
 

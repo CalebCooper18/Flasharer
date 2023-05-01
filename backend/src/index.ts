@@ -2,7 +2,8 @@ import express from 'express';
 import config from './utils/config';
 import mongoose from 'mongoose';
 import userRouter from './routes/userRoute';
-import middleware from './utils/middleware';
+import deckRouter from './routes/deckRoute';
+import {unknownEndpoint} from './utils/middleware';
 
 const app = express();
 
@@ -20,8 +21,9 @@ mongoose.connect(config.MONGODB_URI)
 
 
 app.use('/api/user', userRouter);
+app.use('/api/deck', deckRouter);
 
-app.use(middleware.unknownEndpoint);
+app.use(unknownEndpoint);
 
 app.listen(config.PORT, () => {
     console.log('App listening on port: ', config.PORT);

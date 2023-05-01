@@ -5,6 +5,7 @@ const deckSchema = new mongoose.Schema({
         type: String,
         required: true
    },
+   likedBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
    likes: {
         type: Number,
         default: 0
@@ -17,15 +18,21 @@ const deckSchema = new mongoose.Schema({
      back: {
           type: String,
           required: true
-     },
-     required: true
+     }
    }],
    tags: [ {
      type: String
    }],
-   user: {
+   createdBy: {
      type: mongoose.Schema.Types.ObjectId,
-     ref: 'User'
+     ref: 'User',
+     required: true
+   },
+   shared:
+   {
+     type: Boolean,
+     required: true,
+     default: true
    }
 })
 

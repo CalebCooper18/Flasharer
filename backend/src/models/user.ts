@@ -18,9 +18,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength: 5,
     },
-    cards: [{
+    decks: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Card'
+        ref: 'Deck'
     }]
 })
 
