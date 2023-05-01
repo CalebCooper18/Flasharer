@@ -1,5 +1,4 @@
-import { authToken } from "../utils/middleware";
-import User from "../models/user";
+import { IUserDocument } from "../models/user";
 import Deck from "../models/deck";
 import { Request, Response } from "express";
 
@@ -47,15 +46,17 @@ async function getAllSharedDecks(_req: Request, res: Response)
 
 async function deleteDeck(req: Request, res: Response)
 {
-    const { user } = req.body;
+    const user : IUserDocument = req.body.user;
     const id = req.params.id;
+
 
     if(!user || !id)
     {
         return res.status(400).json('Missing fields');
     }
 
-    const deckToDelete = await Deck.findById({id});
+
+    const deckToDelete = await Deck.findById(id);
 
     if(!deckToDelete)
     {
@@ -67,7 +68,9 @@ async function deleteDeck(req: Request, res: Response)
         return res.status(401).json({error: 'Unauthorized access'});
     }
 
-    await Deck.deleteOne({_id: id})
+    await Deck.findByIdAndDelete(id.toString());
+    user.decks = user.decks?.filter(deck => deck.toString() !== id.toString());
+    await user.save();
     return res.status(204).end();
 }
 

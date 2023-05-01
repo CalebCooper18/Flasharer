@@ -1,23 +1,6 @@
-import User from "../models/user";
+import User, {IUserDocument, IUser} from "../models/user";
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
-import { Types } from "mongoose";
-
-interface NewUser
-{
-   name: string,
-   username: string,
-   decks: Types.ObjectId[],
-   id?: string
-}
-
-interface CreatedUser {
-    name: string,
-    username: string,
-    password: string,
-    decks: Types.ObjectId[],
-    comparePasswords: (password: string, password2: string) => Promise<boolean>;
-}
 
 
 function signToken(id: string)
@@ -28,7 +11,7 @@ function signToken(id: string)
 }
 
 
-function createJsonWebToken(user: NewUser, statusCode: number, res: Response)
+function createJsonWebToken(user: IUserDocument, statusCode: number, res: Response)
 {
     const token = signToken(user.id as string);
     
@@ -63,13 +46,22 @@ async function signUp(req: Request, res: Response)
     user = new User({
         name,
         username,
-        password
+        password,
+        decks: []
     });
 
-    const newUser = await user.save();
+    
+    await user.save();
+
+    const loggedInUser: IUserDocument | null = await User.findOne({username})
+
+    if(!loggedInUser)
+    {
+        return res.status(500).json({erorr: 'Something went wrong'})
+    }
 
 
-    return createJsonWebToken(newUser, 201, res);
+    return createJsonWebToken(loggedInUser, 201, res);
 }
 
 
@@ -82,7 +74,7 @@ async function login(req: Request, res: Response)
         return res.status(400).json('Missing credinitals')
     }
 
-    const user = (await User.findOne({username}).select('+password')) as CreatedUser | null
+    const user = (await User.findOne({username}).select('+password')) as IUserDocument | null
 
 
     if(!user || !await user.comparePasswords(password, user.password))

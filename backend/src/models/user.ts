@@ -1,4 +1,4 @@
-import mongoose, {Types} from "mongoose";
+import mongoose, {Types, Document} from "mongoose";
 import bcrypt from 'bcrypt';
 
 export interface IUser {
@@ -7,6 +7,10 @@ export interface IUser {
     password: string;
     decks?: Types.ObjectId[];
 };
+
+export interface IUserDocument extends IUser, Document {
+    comparePasswords: (retrivedPassword: string, userPassword: string) => Promise<Boolean>
+}
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -42,7 +46,7 @@ userSchema.pre('save', async function(next) {
 
 })
 
-userSchema.methods.comparePasswords = async function (retrivedPassword: string, userPassword: string)
+userSchema.methods.comparePasswords = async function (retrivedPassword: string, userPassword: string): Promise<Boolean>
 {
     return await bcrypt.compare(retrivedPassword, userPassword);
 }
