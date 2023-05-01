@@ -1,6 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, {Types} from "mongoose";
 import bcrypt from 'bcrypt';
 
+export interface IUser {
+    name: string;
+    username: string;
+    password: string;
+    decks?: Types.ObjectId[];
+};
 
 const userSchema = new mongoose.Schema({
     name: {
