@@ -5,15 +5,15 @@ import deckController from "../controllers/deckController";
 const deckRouter = Router();
 
 deckRouter.route('/all')
-.get(deckController.getAllSharedDecks);
+.get(deckController.getAllSharedDecksHandler);
 
 deckRouter.route('/')
 .get()
-.post(authToken, deckController.createDeck);
+.post(authToken, deckController.createDeckHandler);
 
 deckRouter.route('/:id')
 .get()
 .patch()
-.delete(authToken, deckController.deleteDeck);
+.delete(authToken, deckController.deleteDeckHandler);
 
 export default deckRouter;

@@ -1,39 +1,22 @@
 import { IUserDocument } from "../models/user";
 import Deck, { IDeck } from "../models/deck";
 import { Request, Response } from "express";
+import { createNewDeck } from "../service/deck.service";
 
-interface INewDeck extends IDeck {
-    user: IUserDocument
-}
 
-async function createDeck(req: Request, res: Response )
+async function createDeckHandler(req: Request, res: Response )
 {
-    const {user, topic, cards, shared, tags}: INewDeck  = req.body;
+    try {
+        const newDeck = await createNewDeck(req.body);
+        return res.status(200).json(newDeck);
+        
+    } catch (error: any) {
 
-    if(!user || !topic || !cards || shared === undefined)
-    {
-        return res.status(400).json({error: 'Missing fields'});
+        return res.status(400).json(error.message);
     }
-
-    const deck = new Deck({
-        topic,
-        cards,
-        shared,
-        createdBy: user._id,
-        likedBy: [],
-        tags: tags ? tags : []
-    })
-
-    const newDeck = await deck.save();
-
-    user.decks = user.decks?.concat(newDeck.id);
-
-    await user.save();
-
-    return res.status(201).json(newDeck);
 }
 
-async function getAllSharedDecks(_req: Request, res: Response)
+async function getAllSharedDecksHandler(_req: Request, res: Response)
 {
     try 
     {
@@ -47,7 +30,7 @@ async function getAllSharedDecks(_req: Request, res: Response)
     }
 }
 
-async function deleteDeck(req: Request, res: Response)
+async function deleteDeckHandler(req: Request, res: Response)
 {
     const user : IUserDocument = req.body.user;
     const id = req.params.id;
@@ -80,7 +63,7 @@ async function deleteDeck(req: Request, res: Response)
 
 
 export default{
-    createDeck,
-    getAllSharedDecks,
-    deleteDeck
+    createDeckHandler,
+    getAllSharedDecksHandler,
+    deleteDeckHandler
 }

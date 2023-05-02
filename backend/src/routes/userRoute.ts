@@ -3,8 +3,8 @@ import authController from '../controllers/authController';
 
 const userRouter = Router()
 
-userRouter.post('/signup', authController.signUp);
-userRouter.post('/login', authController.login);
+userRouter.post('/signup', authController.registerHandler);
+userRouter.post('/login', authController.loginHandler);
 
 
 

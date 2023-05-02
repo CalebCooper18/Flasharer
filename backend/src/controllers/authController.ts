@@ -1,5 +1,5 @@
-import User, {IUserDocument, IUser} from "../models/user";
-import { Request, Response, NextFunction } from "express";
+import { IUserDocument, IUser } from "../models/user";
+import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import { createUser, loginUser } from "../service/user.service";
 
@@ -26,7 +26,7 @@ function createJsonWebToken(user: IUserDocument, statusCode: number, res: Respon
 }
 
 
-async function signUp(req: Request, res: Response)
+async function registerHandler(req: Request, res: Response)
 {
 
     try 
@@ -39,7 +39,7 @@ async function signUp(req: Request, res: Response)
 }
 
 
-async function login(req: Request, res: Response)
+async function loginHandler(req: Request, res: Response)
 {
     const user = await loginUser(req.body);
 
@@ -55,6 +55,6 @@ async function login(req: Request, res: Response)
 
 
 export default {
-    signUp,
-    login
+    registerHandler,
+    loginHandler
 }
