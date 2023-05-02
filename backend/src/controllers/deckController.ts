@@ -1,7 +1,6 @@
 import { IUserDocument } from "../models/user";
-import Deck, { IDeck } from "../models/deck";
 import { Request, Response } from "express";
-import { createNewDeck, deleteDeck, findDeck, getAllSharedDecks } from "../service/deck.service";
+import { createNewDeck, deleteDeck, findDeck, getAllSharedDecks, getAllUserDecks } from "../service/deck.service";
 
 
 async function createDeckHandler(req: Request, res: Response )
@@ -25,15 +24,29 @@ async function getAllSharedDecksHandler(_req: Request, res: Response)
 
     } catch (error) 
     {
-
        return res.status(500).json({error: 'Something went wrong'});
     }
 }
 
-async function getSingleDeckHandler(req: Request, res: Response)
-{
+async function getAllUsersDecksHandler(req: Request, res: Response){
+   const user: IUserDocument = req.body.user;
+   try 
+   {
+        const allUserDecks = await getAllUserDecks(user);
+        return res.status(200).json(allUserDecks);
 
+   } catch (error) 
+   {
+        return res.status(500).json({error: "Something went wrong"});
+   }
 }
+
+
+// async function getSingleDeckHandler(req: Request, res: Response)
+// {
+//     const id = req.params.id;
+    
+// }
 
 async function deleteDeckHandler(req: Request, res: Response)
 {
@@ -63,5 +76,6 @@ async function deleteDeckHandler(req: Request, res: Response)
 export default{
     createDeckHandler,
     getAllSharedDecksHandler,
-    deleteDeckHandler
+    deleteDeckHandler,
+    getAllUsersDecksHandler,
 }

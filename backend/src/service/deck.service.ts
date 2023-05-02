@@ -36,11 +36,23 @@ export async function getAllSharedDecks()
 {
     try 
     {
-        const allSharedDecks = await Deck.find({shared: {eq: true}})
+        const allSharedDecks = await Deck.find({shared: true});
         return allSharedDecks;
     } catch (error) {
+        
         throw new Error();
     }    
+}
+
+export async function getAllUserDecks(user: IUserDocument)
+{
+    try 
+    {
+        const allUserDecks = await Deck.find({createdBy: user._id})
+        return allUserDecks;
+    } catch (error) {
+        throw new Error();
+    }
 }
 
 

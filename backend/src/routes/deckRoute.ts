@@ -4,11 +4,11 @@ import deckController from "../controllers/deckController";
 
 const deckRouter = Router();
 
-deckRouter.route('/all')
-.get(deckController.getAllSharedDecksHandler);
+deckRouter.route('/alluserdecks')
+.get(authToken, deckController.getAllUsersDecksHandler);
 
 deckRouter.route('/')
-.get()
+.get(authToken, deckController.getAllSharedDecksHandler)
 .post(authToken, deckController.createDeckHandler);
 
 deckRouter.route('/:id')
