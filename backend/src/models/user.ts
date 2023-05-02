@@ -1,4 +1,4 @@
-import mongoose, {Types, Document} from "mongoose";
+import mongoose, {Schema, Types, Document} from "mongoose";
 import bcrypt from 'bcrypt';
 
 export interface IUser {
@@ -12,7 +12,7 @@ export interface IUserDocument extends IUser, Document {
     comparePasswords: (retrivedPassword: string, userPassword: string) => Promise<Boolean>
 }
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         minLength: 5,
     },
     decks: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Deck'
     }]
 })
@@ -61,7 +61,7 @@ userSchema.set('toJSON', {
 });
 
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model<IUserDocument>('User', userSchema);
 
 export default User;
 

@@ -1,6 +1,7 @@
 import User, {IUserDocument, IUser} from "../models/user";
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
+import { createUser, loginUser } from "../service/user.service";
 
 function signToken(id: string)
 {
@@ -27,58 +28,24 @@ function createJsonWebToken(user: IUserDocument, statusCode: number, res: Respon
 
 async function signUp(req: Request, res: Response)
 {
-    const {name, username, password} = req.body;
 
-    if(!name || !username || !password)
+    try 
     {
-        return res.status(400).send('Missing credinitals');
+        const user = await createUser(req.body as IUser)
+        return createJsonWebToken(user, 201, res);
+    } catch(e: any) {
+        return res.status(409).send(e.message)
     }
-
-    let user = await User.findOne({username});
-
-    if(user)
-    {
-        return res.status(400).json({error: 'This username as already been taken please use another'});
-    }
-
-
-    user = new User({
-        name,
-        username,
-        password,
-        decks: []
-    });
-
-    
-    await user.save();
-
-    const loggedInUser: IUserDocument | null = await User.findOne({username})
-
-    if(!loggedInUser)
-    {
-        return res.status(500).json({erorr: 'Something went wrong'})
-    }
-
-
-    return createJsonWebToken(loggedInUser, 201, res);
 }
 
 
 async function login(req: Request, res: Response)
 {
-    const {username, password} = req.body;
+    const user = await loginUser(req.body);
 
-    if(!username || !password)
+    if(!user)
     {
-        return res.status(400).json('Missing credinitals')
-    }
-
-    const user = (await User.findOne({username}).select('+password')) as IUserDocument | null
-
-
-    if(!user || !await user.comparePasswords(password, user.password))
-    {
-        return res.status(401).json('No account with that username')
+        return res.status(401).json('Invalid username or password');
     }
 
     return createJsonWebToken(user, 200, res);

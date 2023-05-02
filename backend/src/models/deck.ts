@@ -1,4 +1,4 @@
-import mongoose, {Types, Document} from "mongoose";
+import mongoose, {Schema, Types, Document} from "mongoose";
 
 export interface IDeck
 {
@@ -14,13 +14,15 @@ export interface IDeck
      shared: boolean;
 }
 
+export interface IDeckDocument extends IDeck, Document {};
 
-const deckSchema = new mongoose.Schema({
+
+const deckSchema = new Schema({
    topic: {
         type: String,
         required: true
    },
-   likedBy: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+   likedBy: [{type: Schema.Types.ObjectId, ref: 'User'}],
    likes: {
         type: Number,
         default: 0
@@ -39,7 +41,7 @@ const deckSchema = new mongoose.Schema({
      type: String
    }],
    createdBy: {
-     type: mongoose.Schema.Types.ObjectId,
+     type: Schema.Types.ObjectId,
      ref: 'User',
      required: true
    },
@@ -59,6 +61,6 @@ deckSchema.set('toJSON', {
      } 
 });
 
-const Deck = mongoose.model('Deck', deckSchema);
+const Deck = mongoose.model<IDeckDocument>('Deck', deckSchema);
 
 export default Deck;
