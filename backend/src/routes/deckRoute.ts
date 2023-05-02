@@ -12,7 +12,7 @@ deckRouter.route('/')
 .post(authToken, deckController.createDeckHandler);
 
 deckRouter.route('/:id')
-.get()
+.get(authToken, deckController.getSingleDeckHandler)
 .patch()
 .delete(authToken, deckController.deleteDeckHandler);
 

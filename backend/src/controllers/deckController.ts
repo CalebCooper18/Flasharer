@@ -42,11 +42,25 @@ async function getAllUsersDecksHandler(req: Request, res: Response){
 }
 
 
-// async function getSingleDeckHandler(req: Request, res: Response)
-// {
-//     const id = req.params.id;
+async function getSingleDeckHandler(req: Request, res: Response)
+{
+    const id = req.params.id;
+    const user: IUserDocument = req.body.user;
+
+    const deck = await findDeck(id);
+
+    if(!deck)
+    {
+        return res.status(404).json({error: 'Deck does not exist'});
+    }
+
+    if(!deck.shared && deck.createdBy.toString() !== user._id.toString())
+    {
+        return res.status(403).json({error: 'Unauthorized'})
+    }
     
-// }
+    return res.status(200).json(deck);
+}
 
 async function deleteDeckHandler(req: Request, res: Response)
 {
@@ -78,4 +92,5 @@ export default{
     getAllSharedDecksHandler,
     deleteDeckHandler,
     getAllUsersDecksHandler,
+    getSingleDeckHandler
 }
