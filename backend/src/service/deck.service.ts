@@ -31,3 +31,30 @@ export async function createNewDeck(deckInput: INewDeck): Promise<IDeckDocument>
         throw new Error(error as string)
    } 
 }
+
+export async function getAllSharedDecks() 
+{
+    try 
+    {
+        const allSharedDecks = await Deck.find({shared: {eq: true}})
+        return allSharedDecks;
+    } catch (error) {
+        throw new Error();
+    }    
+}
+
+
+export async function findDeck(id: string)
+{
+    try {
+        const deck = await Deck.findById(id);
+        return deck;
+    } catch (error) {
+        throw new Error();
+    }
+}
+
+export async function deleteDeck(id: string)
+{
+    return Deck.findByIdAndDelete(id);
+}
