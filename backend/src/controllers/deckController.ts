@@ -1,6 +1,7 @@
 import { IUserDocument } from "../models/user";
 import { Request, Response } from "express";
 import { createNewDeck, deleteDeck, findDeck, getAllSharedDecks, getAllUserDecks } from "../service/deck.service";
+import { IDeckDocument } from "../models/deck";
 
 
 async function createDeckHandler(req: Request, res: Response )
@@ -65,25 +66,22 @@ async function getSingleDeckHandler(req: Request, res: Response)
 async function deleteDeckHandler(req: Request, res: Response)
 {
     const user : IUserDocument = req.body.user;
-    const id = req.params.id;
-
-    const deckToDelete = await findDeck(id);
-
-    if(!deckToDelete)
-    {
-        return res.status(404).json({error: 'Deck does not exist'});
-    }
-
-    if(deckToDelete.createdBy.toString() !== user._id.toString())
-    {
-        return res.status(403).json({error: 'Unauthorized access'});
-    }
-
+    const deck: IDeckDocument = req.body.deck;
+    const id: string = deck._id.toString()
     await deleteDeck(id);
-    user.decks = user.decks?.filter(deck => deck.toString() !== id.toString());
+    user.decks = user.decks?.filter(deck => deck._id.toString() !== id);
     await user.save();
     return res.status(204).end();
 }
+
+// async function updateShareDeckHandler(req: Request, res: Response)
+// {
+//     const user: IUserDocument = req.body.res;
+//     const id = req.params.id;
+
+//     const deckToUpdate = await findDeck(id);
+
+// }
 
 
 

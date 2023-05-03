@@ -6,8 +6,7 @@ interface INewDeck extends IDeck {
 }
 
 export async function createNewDeck(deckInput: INewDeck): Promise<IDeckDocument> {
-   try 
-   {
+   try {
         const user = deckInput.user;
 
         const deck = new Deck({
@@ -19,7 +18,7 @@ export async function createNewDeck(deckInput: INewDeck): Promise<IDeckDocument>
             shared: deckInput.shared
         })
 
-       const newDeck =  await deck.save();
+       const newDeck = await deck.save();
 
        user.decks = user.decks?.concat(newDeck.id);
 
@@ -34,20 +33,17 @@ export async function createNewDeck(deckInput: INewDeck): Promise<IDeckDocument>
 
 export async function getAllSharedDecks() 
 {
-    try 
-    {
+    try {
         const allSharedDecks = await Deck.find({shared: true});
         return allSharedDecks;
     } catch (error) {
-        
         throw new Error();
     }    
 }
 
 export async function getAllUserDecks(user: IUserDocument)
 {
-    try 
-    {
+    try {   
         const allUserDecks = await Deck.find({createdBy: user._id})
         return allUserDecks;
     } catch (error) {

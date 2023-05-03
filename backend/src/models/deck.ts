@@ -1,14 +1,12 @@
 import mongoose, {Schema, Types, Document} from "mongoose";
+import {ICard, cardSchema} from "./card";
 
 export interface IDeck
 {
      topic: string;
      likedBy: Types.ObjectId[];
      likes: number;
-     cards: {
-          front: string;
-          back: string;
-     }[];
+     cards: ICard[];
      tags: string[];
      createdBy: Types.ObjectId;
      shared: boolean;
@@ -27,16 +25,7 @@ const deckSchema = new Schema({
         type: Number,
         default: 0
    },
-   cards: [{
-     front: {
-          type: String,
-          required: true
-     },
-     back: {
-          type: String,
-          required: true
-     }
-   }],
+   cards: [cardSchema],
    tags: [ {
      type: String
    }],
