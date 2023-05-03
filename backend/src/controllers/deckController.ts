@@ -1,7 +1,8 @@
 import { IUserDocument } from "../models/user";
 import { Request, Response } from "express";
 import { createNewDeck, deleteDeck, findDeck, getAllSharedDecks, getAllUserDecks } from "../service/deck.service";
-import { IDeckDocument } from "../models/deck";
+import Deck, { IDeckDocument } from "../models/deck";
+import { UpdateWriteOpResult} from "mongoose";
 
 
 async function createDeckHandler(req: Request, res: Response )
@@ -113,6 +114,23 @@ async function updateLikesDeckHandler(req: Request, res: Response)
     return res.status(200).json(deckToUpdate);
 }
 
+async function deleteCardHandler(req: Request, res: Response)
+{
+    const deck: IDeckDocument = req.body.deck;
+    const cardId = req.params.cardId;
+    const modifiedDeck: UpdateWriteOpResult = await Deck.updateOne({_id: deck._id}, {$pull: {cards: {_id: cardId } } } );
+
+    
+    if(modifiedDeck.modifiedCount === 0)
+    {
+        return res.status(404).json({error: 'The card does not exist'});
+    }
+    else 
+    {
+        return res.status(204).end();
+    }
+}
+
 
 export default{
     createDeckHandler,
@@ -121,5 +139,6 @@ export default{
     getAllUsersDecksHandler,
     getSingleDeckHandler,
     updateShareDeckHandler,
-    updateLikesDeckHandler
+    updateLikesDeckHandler,
+    deleteCardHandler
 }

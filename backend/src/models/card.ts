@@ -1,4 +1,4 @@
-import { Schema, Document } from "mongoose";
+import { Schema } from "mongoose";
 
 export interface ICard {
     subject: string;
