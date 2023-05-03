@@ -16,7 +16,10 @@ deckRouter.route('/:id')
 .delete(authToken, checkDeckOwnerShip, deckController.deleteDeckHandler);
 
 deckRouter.route('/:id/shared')
-.patch()
+.patch(authToken, checkDeckOwnerShip, deckController.updateShareDeckHandler);
+
+deckRouter.route('/:id/likes')
+.patch(authToken, deckController.updateLikesDeckHandler);
 
 
 export default deckRouter;

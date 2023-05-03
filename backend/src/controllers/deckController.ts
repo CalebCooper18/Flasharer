@@ -74,15 +74,44 @@ async function deleteDeckHandler(req: Request, res: Response)
     return res.status(204).end();
 }
 
-// async function updateShareDeckHandler(req: Request, res: Response)
-// {
-//     const user: IUserDocument = req.body.res;
-//     const id = req.params.id;
 
-//     const deckToUpdate = await findDeck(id);
+async function updateShareDeckHandler(req: Request, res: Response)
+{
+  const deck : IDeckDocument = req.body.deck;
+  deck.shared = !deck.shared;
+  await deck.save();
 
-// }
+  return res.status(200).json(deck);
+}
 
+async function updateLikesDeckHandler(req: Request, res: Response)
+{
+    const user : IUserDocument = req.body.user;
+    const id : string = req.params.id;
+    const deckToUpdate = await findDeck(id);
+
+    if(!deckToUpdate)
+    {
+        return res.status(404).json({error: 'Deck does not exist'});
+    }
+
+    const indexOfUserLikedId = deckToUpdate.likedBy.indexOf(user._id.toString());
+
+    if(indexOfUserLikedId !== -1)
+    {
+        deckToUpdate.likedBy.splice(indexOfUserLikedId, 1);
+        deckToUpdate.likes = deckToUpdate.likes - 1;
+    }
+    else 
+    {
+        deckToUpdate.likedBy.push(user._id.toString());
+        deckToUpdate.likes =  deckToUpdate.likes + 1;
+    }
+
+    await deckToUpdate.save();
+
+    return res.status(200).json(deckToUpdate);
+}
 
 
 export default{
@@ -90,5 +119,7 @@ export default{
     getAllSharedDecksHandler,
     deleteDeckHandler,
     getAllUsersDecksHandler,
-    getSingleDeckHandler
+    getSingleDeckHandler,
+    updateShareDeckHandler,
+    updateLikesDeckHandler
 }
