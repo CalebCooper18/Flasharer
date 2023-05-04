@@ -125,10 +125,39 @@ async function deleteCardHandler(req: Request, res: Response)
     {
         return res.status(404).json({error: 'The card does not exist'});
     }
-    else 
+    
+    return res.status(204).end();
+}
+
+async function updateCardHandler(req: Request, res: Response)
+{
+    const deck: IDeckDocument = req.body.deck;
+    const cardId = req.params.cardId;
+    const {subject, answer} = req.body.newCard;
+
+    if(!answer || !subject)
     {
-        return res.status(204).end();
+        return res.status(400).json({error: 'Missing fields'})
     }
+
+    const modifiedDeck: UpdateWriteOpResult | null = await Deck.findOneAndUpdate({
+        _id: deck._id,
+         "cards._id": cardId
+    },
+    {
+        $set: {
+            "cards.$.subject": subject,
+            "cards.$.answer": answer
+        }
+    }, 
+    { new: true })
+    
+    if(!modifiedDeck)
+    {
+        return res.status(404).json({error: 'No card with matching ID'});
+    }
+    
+    return res.status(200).json(modifiedDeck);
 }
 
 
@@ -140,5 +169,6 @@ export default{
     getSingleDeckHandler,
     updateShareDeckHandler,
     updateLikesDeckHandler,
-    deleteCardHandler
+    deleteCardHandler,
+    updateCardHandler
 }

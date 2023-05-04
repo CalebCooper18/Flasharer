@@ -22,7 +22,8 @@ deckRouter.route('/:id/likes')
 .patch(authToken, deckController.updateLikesDeckHandler);
 
 deckRouter.route('/:id/cards/:cardId')
-.delete(authToken, checkDeckOwnerShip, deckController.deleteCardHandler);
+.delete(authToken, checkDeckOwnerShip, deckController.deleteCardHandler)
+.patch(authToken, checkDeckOwnerShip, deckController.updateCardHandler);
 
 
 export default deckRouter;
