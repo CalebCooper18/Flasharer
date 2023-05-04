@@ -133,9 +133,9 @@ async function updateCardHandler(req: Request, res: Response)
 {
     const deck: IDeckDocument = req.body.deck;
     const cardId = req.params.cardId;
-    const {subject, answer} = req.body.newCard;
+    const {subject, answer}: {subject: unknown, answer: unknown} = req.body;
 
-    if(!answer || !subject)
+    if(!answer || !subject || typeof subject !== 'string' || typeof answer !== 'string' )
     {
         return res.status(400).json({error: 'Missing fields'})
     }
@@ -160,6 +160,35 @@ async function updateCardHandler(req: Request, res: Response)
     return res.status(200).json(modifiedDeck);
 }
 
+async function addCardHandler(req: Request, res: Response) 
+{
+    const deck: IDeckDocument = req.body.deck;
+    const {subject, answer}: {subject: unknown, answer: unknown} = req.body;
+
+    if(!subject || !answer || typeof subject !== 'string' || typeof answer !== 'string')
+    {
+        return res.status(400).json({error: 'Card missing fields or incorrect formatting'});
+    }
+
+    const modifiedDeck: UpdateWriteOpResult | null = await Deck.findOneAndUpdate({
+        _id: deck._id
+    },
+    {
+        $push:
+        {
+            cards: {subject, answer}
+        }
+    },
+    {new: true})
+
+    if(!modifiedDeck)
+    {
+        return res.status(500).json({error: 'Something went wrong'})
+    }
+
+    return res.status(200).json(modifiedDeck);
+}
+
 
 export default{
     createDeckHandler,
@@ -170,5 +199,6 @@ export default{
     updateShareDeckHandler,
     updateLikesDeckHandler,
     deleteCardHandler,
-    updateCardHandler
+    updateCardHandler,
+    addCardHandler
 }

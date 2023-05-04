@@ -26,4 +26,7 @@ deckRouter.route('/:id/cards/:cardId')
 .patch(authToken, checkDeckOwnerShip, deckController.updateCardHandler);
 
 
+deckRouter.route('/:id/cards')
+.post(authToken, checkDeckOwnerShip, deckController.addCardHandler);
+
 export default deckRouter;
