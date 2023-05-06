@@ -1,5 +1,5 @@
 import { baseURl } from "../utils/constants";
-import { UserLogin } from "../Types";
+import { UserLogin } from "../types";
 
 async function login(creds: UserLogin) 
 {
@@ -12,9 +12,7 @@ async function login(creds: UserLogin)
         body: JSON.stringify(creds)
     });
     const data = await res.json();
-    console.log(res.status);
-    console.log(data);
-    return 'hello';
+    return data.data;
 }
 
 

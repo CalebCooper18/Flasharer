@@ -1,6 +1,7 @@
 import { AnyAction, createSlice, PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { UserLogin } from "../../Types";
+import { UserLogin } from "../../types.ts"
 import loginService from "../../services/loginService";
+import { Dispatch } from "react";
 
 type InitialState = {
     user: null | string
@@ -21,7 +22,7 @@ const loginSlice = createSlice({
         {
             state.user = action.payload;
         },
-        logout(state, action: PayloadAction<string>)
+        logout(state, action: PayloadAction<null>)
         {
             state.user = action.payload;
         }
@@ -38,6 +39,14 @@ export const loginUser = (creds: UserLogin) => {
         // userService.setUser(user);
         dispatch(login(user));
     }
+}
+
+export const logoutUser = () => {
+    return (dispatch: Dispatch<AnyAction>) => {
+        //userService.clearUser()
+        dispatch(logout(null))
+    }
+    
 }
 
 
