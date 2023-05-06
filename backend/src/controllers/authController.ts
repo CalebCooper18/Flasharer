@@ -41,6 +41,7 @@ async function registerHandler(req: Request, res: Response)
 
 async function loginHandler(req: Request, res: Response)
 {
+    console.log(req.body);
     const user = await loginUser(req.body);
 
     if(!user)

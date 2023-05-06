@@ -1,5 +1,6 @@
 import { AnyAction, createSlice, PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { UserLogin } from "../Types";
+import { UserLogin } from "../../Types";
+import loginService from "../../services/loginService";
 
 type InitialState = {
     user: null | string
@@ -34,7 +35,7 @@ export const loginUser = (creds: UserLogin) => {
     
     return async (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
         const user = await loginService.login(creds);
-        userService.setUser(user);
+        // userService.setUser(user);
         dispatch(login(user));
     }
 }

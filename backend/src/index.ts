@@ -1,6 +1,7 @@
 import express from 'express';
 import config from './utils/config';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import userRouter from './routes/userRoute';
 import deckRouter from './routes/deckRoute';
 import {unknownEndpoint} from './utils/middleware';
@@ -8,6 +9,7 @@ import {unknownEndpoint} from './utils/middleware';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 mongoose.set('strictQuery', false)
 
