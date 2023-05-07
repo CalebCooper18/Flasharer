@@ -8,7 +8,10 @@ export default {
     extend: {
       colors: {
         primary: '#202225',
-        secondary: '#23272A'
+        secondary: '#23272A',
+        textboxDark: '#35383a',
+        vistaBlue: '#738ADB',
+        darkenVistaBlue: '#6479c4'
       },
       screens: {
         xss: '450px'

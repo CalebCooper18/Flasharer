@@ -12,7 +12,7 @@
 
 body
 {
-    background-color: #23272A;
+    background-color: #23272A
 }
 
 @layer components {
@@ -48,7 +48,20 @@ body
 
     .content-container
     {
-        @apply bg-secondary h-screen text-white ms-11 mt-4
+        @apply bg-secondary h-screen text-white ms-16 mt-4
+    }
+
+    .input-field
+    {
+        @apply shadow appearance-none bg-textboxDark
+        rounded w-full py-2 px-3 leading-tight text-gray-400 focus:outline-none
+      focus:outline-vistaBlue
+        transition-all duration-100
+    }
+
+    .form-button {
+        @apply bg-vistaBlue p-2 w-full rounded-md text-2xl 
+        transition-all duration-500 hover:bg-darkenVistaBlue
     }
 }
 

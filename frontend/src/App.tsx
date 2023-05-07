@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <Navbar user={user} />
-      <div className='content-container ms-[76px]'>
+      <div className='content-container xss:ms-[76px]'>
         <Routes>
           <Route path='/' />
           <Route path='/login' element={!user && <Login />} />

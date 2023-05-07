@@ -13,6 +13,7 @@ interface Props{
 export default function Navbar({user}: Props) {
   
   const [isOpen, setIsOpen] = useState(false);
+  
 
   function userLoggedIn()
   {
@@ -22,8 +23,8 @@ export default function Navbar({user}: Props) {
         <>
           <Divider />
           <div className='mt-auto'>
-            <IconLink icon={<AiOutlineLogout  size={22} />} text={'Logout'} linkLocation={'/'} />
-            <IconLink icon={<AiOutlineUser size={22} />} text={'My Account'} linkLocation={'/me'} />
+            <IconLink icon={<AiOutlineLogout  size={22} />} text={'Logout'} linkLocation={'/'} setIsOpen={setIsOpen} />
+            <IconLink icon={<AiOutlineUser size={22} />} text={'My Account'} linkLocation={'/me'} setIsOpen={setIsOpen} />
           </div>
         </>
       )
@@ -32,8 +33,8 @@ export default function Navbar({user}: Props) {
       <>
         <Divider />
         <div className='xss:mt-auto flex flex-col items-center'>
-          <IconLink icon={<AiOutlineLogin size={22} />} text={'Login'} linkLocation={'/login'} />
-          <IconLink icon={<AiOutlineUserAdd size={22} />} text={'Create Account'} linkLocation={'/register'} />
+          <IconLink icon={<AiOutlineLogin size={22} />} text={'Login'} linkLocation={'/login'} setIsOpen={setIsOpen} />
+          <IconLink icon={<AiOutlineUserAdd size={22} />} text={'Create Account'} linkLocation={'/register'} setIsOpen={setIsOpen} />
         </div>
       </>
     )
@@ -48,11 +49,11 @@ export default function Navbar({user}: Props) {
     </button>
     }
     <div className={`m-0 mt-5 p-0 h-full flex-col items-center ${isOpen ? 'flex' : 'hidden'} xss:flex xss:mt-2 transition-all duration-300`}>
-    <IconLink icon={<AiFillHome size={22}/>} text={'Home'} linkLocation={'/'} />
+    <IconLink icon={<AiFillHome size={22}/>} text={'Home'} linkLocation={'/'} setIsOpen={setIsOpen} />
     <Divider />
-    <IconLink icon={<MdCreate size={22} />} text={'Create'} linkLocation={'/create'} />
-    <IconLink icon={<AiOutlineEye size={22} />} text={'View'} linkLocation={'/view'} />
-    <IconLink icon={<AiOutlineInfoCircle size={22} />} text='About' linkLocation={'/about'} />
+    <IconLink icon={<MdCreate size={22} />} text={'Create'} linkLocation={'/create'} setIsOpen={setIsOpen} />
+    <IconLink icon={<AiOutlineEye size={22} />} text={'View'} linkLocation={'/view'} setIsOpen={setIsOpen} />
+    <IconLink icon={<AiOutlineInfoCircle size={22} />} text='About' linkLocation={'/about'} setIsOpen={setIsOpen} />
     {userLoggedIn()}
     {isOpen &&
       <button className='icon-btn mt-3 flex xss:hidden' onClick={() => setIsOpen(false)}>
