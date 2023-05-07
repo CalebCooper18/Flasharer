@@ -8,8 +8,11 @@ export default {
     extend: {
       colors: {
         primary: '#202225',
-        secondary: '#5865f2'
-      }
+        secondary: '#23272A'
+      },
+      screens: {
+        xss: '450px'
+      },
     },
   },
   plugins: [],

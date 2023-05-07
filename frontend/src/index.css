@@ -10,14 +10,19 @@
   padding: 0;
 }
 
+body
+{
+    background-color: #23272A;
+}
+
 @layer components {
     .icon-btn
     {
-        @apply relative flex justify-center items-center h-12 w-12
+        @apply relative flex justify-center items-center h-8 w-8
                 my-2 mx-auto shadow-lg bg-gray-800 text-green-500
                 hover:bg-green-600 hover:text-white rounded-3xl
                 hover:rounded-xl transition-all duration-300 ease-linear
-                hover:cursor-pointer
+                hover:cursor-pointer xss:h-12 xss:w-12
     }
 
     .icon-tooltip
@@ -29,6 +34,22 @@
 
     .sidebar-break 
     {
-        @apply h-0.5 w-10 my-2 ms-3  rounded-full shadow-md bg-white
+        @apply h-0.5 w-10 my-2 rounded-full shadow-md bg-white
+    }
+
+    .mobile-link
+    {
+        @apply relative tracking-widest text-lg after:content-[''] after:absolute my-3 overflow-y-scroll
+        after:top-5 after:scale-0 after:w-full after:h-0.5 after:left-0 after:hover:scale-100
+        after:bg-green-500 after:origin-left after:transition-all after:duration-700
+        transition-all duration-200 
+
+    }
+
+    .content-container
+    {
+        @apply bg-secondary h-screen text-white ms-11 mt-4
     }
 }
+
+

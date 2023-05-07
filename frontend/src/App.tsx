@@ -14,11 +14,13 @@ function App() {
   return (
     <>
       <Navbar user={user} />
-      <Routes>
-        <Route path='/' />
-        <Route path='/login' element={!user && <Login />} />
-        <Route path='/test' element={<></>} />
-      </Routes>
+      <div className='content-container ms-[76px]'>
+        <Routes>
+          <Route path='/' />
+          <Route path='/login' element={!user && <Login />} />
+          <Route path='/test' element={<></>} />
+        </Routes>
+      </div>
     </>
   )
 }

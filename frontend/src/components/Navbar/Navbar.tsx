@@ -1,14 +1,18 @@
-import { AiFillHome, AiOutlineLogin, AiOutlineLogout, AiOutlineUser, AiOutlineUserAdd, AiOutlineInfoCircle, AiOutlineEye } from 'react-icons/ai';
+import { AiFillHome, AiOutlineLogin, AiOutlineLogout, AiOutlineUser, AiOutlineUserAdd, AiOutlineInfoCircle, AiOutlineEye, AiOutlineCloseCircle} from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import IconLink from './IconLink';
 import Divider from './Divider';
 import { User } from '../../types';
+import { useState } from 'react';
 
 interface Props{
-  user: User;
+  user: User | null;
 }
 
 export default function Navbar({user}: Props) {
+  
+  const [isOpen, setIsOpen] = useState(false);
 
   function userLoggedIn()
   {
@@ -27,7 +31,7 @@ export default function Navbar({user}: Props) {
     return(
       <>
         <Divider />
-        <div className='mt-auto'>
+        <div className='xss:mt-auto flex flex-col items-center'>
           <IconLink icon={<AiOutlineLogin size={22} />} text={'Login'} linkLocation={'/login'} />
           <IconLink icon={<AiOutlineUserAdd size={22} />} text={'Create Account'} linkLocation={'/register'} />
         </div>
@@ -37,14 +41,25 @@ export default function Navbar({user}: Props) {
 
 
   return (
-   <nav className="fixed top-0 left-0 h-screen w-16
-                   flex flex-col text-secondary bg-primary shadow-lg">
+   <nav className={`fixed top-0 left-0 h-screen ${isOpen ? 'w-full' : 'w-10'} text-green-500 bg-primary shadow-lg xss:w-16 transition-all duration-300 flex flex-col items-center`}>
+    {!isOpen && 
+    <button className='icon-btn mt-3 flex xss:hidden' onClick={() => setIsOpen(true)}>
+      <GiHamburgerMenu size={22} />
+    </button>
+    }
+    <div className={`m-0 mt-5 p-0 h-full flex-col items-center ${isOpen ? 'flex' : 'hidden'} xss:flex xss:mt-2 transition-all duration-300`}>
     <IconLink icon={<AiFillHome size={22}/>} text={'Home'} linkLocation={'/'} />
     <Divider />
     <IconLink icon={<MdCreate size={22} />} text={'Create'} linkLocation={'/create'} />
     <IconLink icon={<AiOutlineEye size={22} />} text={'View'} linkLocation={'/view'} />
     <IconLink icon={<AiOutlineInfoCircle size={22} />} text='About' linkLocation={'/about'} />
     {userLoggedIn()}
+    {isOpen &&
+      <button className='icon-btn mt-3 flex xss:hidden' onClick={() => setIsOpen(false)}>
+        <AiOutlineCloseCircle size={22} />
+      </button> 
+    }
+    </div>
    </nav>
   )
 }
