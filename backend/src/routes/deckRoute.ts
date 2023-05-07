@@ -4,7 +4,7 @@ import deckController from "../controllers/deckController";
 
 const deckRouter = Router();
 
-deckRouter.route('/alluserdecks')
+deckRouter.route('/mydecks')
 .get(authToken, deckController.getAllUsersDecksHandler);
 
 deckRouter.route('/')

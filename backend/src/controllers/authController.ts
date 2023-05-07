@@ -18,7 +18,9 @@ function createJsonWebToken(user: IUserDocument, statusCode: number, res: Respon
     return res.status(statusCode).json({
         status: 'Success',
         data: {
-            user,
+            id: user.id,
+            name: user.name,
+            username: user.username,
             token
         }
         

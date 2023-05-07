@@ -1,10 +1,11 @@
 import { AnyAction, createSlice, PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { UserLogin } from "../../types.ts"
-import loginService from "../../services/loginService";
+import { User, UserLogin } from "../../types.ts"
+import loginService from "../../services/login.service.ts";
+import userService from "../../services/user.service.ts";
 import { Dispatch } from "react";
 
 type InitialState = {
-    user: null | string
+    user: null | User;
 }
 
 
@@ -18,7 +19,7 @@ const loginSlice = createSlice({
     initialState: initialState,
     reducers:
     {
-        login(state, action: PayloadAction<string>)
+        login(state, action: PayloadAction<User>)
         {
             state.user = action.payload;
         },
@@ -36,15 +37,15 @@ export const loginUser = (creds: UserLogin) => {
     
     return async (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
         const user = await loginService.login(creds);
-        // userService.setUser(user);
+        userService.setUser(user);
         dispatch(login(user));
     }
 }
 
 export const logoutUser = () => {
     return (dispatch: Dispatch<AnyAction>) => {
-        //userService.clearUser()
-        dispatch(logout(null))
+        userService.clearUser();
+        dispatch(logout(null));
     }
     
 }

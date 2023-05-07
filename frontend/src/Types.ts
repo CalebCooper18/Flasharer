@@ -1,9 +1,11 @@
 export interface UserLogin {
-    username: string,
-    password: string
+    username: string;
+    password: string;
 }
 
-export interface User{
-    name: string,
-    username: string
+export interface User {
+    id: string;
+    name: string;
+    username: string;
+    token: string;
 }

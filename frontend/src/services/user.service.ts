@@ -1,9 +1,12 @@
+import { User  } from "../types";
+
 type Token = null | string
 
 let token: Token = null;
 
 
-function setUser(user: {token: string})
+
+function setUser(user: User)
 {
     window.localStorage.setItem('userLoggedin', JSON.stringify(user));
     token = user.token;
@@ -16,7 +19,7 @@ function checkIfUserLoggedIn()
 
     if(loggedIn)
     {
-        const user = JSON.parse(loggedIn);
+        const user: User = JSON.parse(loggedIn);
         token = user.token;
         return user;
     }
