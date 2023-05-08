@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRouter from './routes/userRoute';
 import deckRouter from './routes/deckRoute';
 import {unknownEndpoint} from './utils/middleware';
+import globalErrorHandler from './controllers/errorController';
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use('/api/user', userRouter);
 app.use('/api/deck', deckRouter);
 
 app.use(unknownEndpoint);
+
+app.use(globalErrorHandler);
 
 app.listen(config.PORT, () => {
     console.log('App listening on port: ', config.PORT);

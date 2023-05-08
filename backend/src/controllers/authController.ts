@@ -1,7 +1,9 @@
 import { IUserDocument, IUser } from "../models/user";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import { createUser, loginUser } from "../service/user.service";
+import { MongoError } from "mongodb";
+import AppError from "../utils/appError";
 
 function signToken(id: string)
 {
@@ -28,22 +30,26 @@ function createJsonWebToken(user: IUserDocument, statusCode: number, res: Respon
 }
 
 
-async function registerHandler(req: Request, res: Response)
+async function registerHandler(req: Request, res: Response, next: NextFunction)
 {
 
     try 
     {
+        if(!req.body.password)
+        {
+            return next(new AppError('Requires a password', 400))
+        }
         const user = await createUser(req.body as IUser)
         return createJsonWebToken(user, 201, res);
-    } catch(e: any) {
-        return res.status(409).send(e.message)
+    } catch(e: unknown) {
+
+        return next(e)
     }
 }
 
 
 async function loginHandler(req: Request, res: Response)
 {
-    console.log(req.body);
     const user = await loginUser(req.body);
 
     if(!user)

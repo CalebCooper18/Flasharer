@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom';
+import createAccountService from '../services/createAccount.service';
 
 export default function Register() {
 
@@ -12,6 +13,7 @@ export default function Register() {
     {
         e.preventDefault();
 
+        createAccountService.createAccount({name, username, password})
     }
 
     return (

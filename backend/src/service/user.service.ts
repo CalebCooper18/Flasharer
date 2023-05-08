@@ -3,8 +3,6 @@ import User, {IUser, IUserDocument} from "../models/user";
 
 export async function createUser(userInput: IUser): Promise<IUserDocument>
 {
-    try 
-    {
         const user = new User({
             username: userInput.username,
             name: userInput.name,
@@ -19,15 +17,12 @@ export async function createUser(userInput: IUser): Promise<IUserDocument>
 
         if(!loggedInUser)
         {
-            throw Error('Something went wrong');
+            throw new Error('Internal Error')
         }
-
+        
         return loggedInUser;
         
-    } catch (error: unknown) {
-        throw new Error(error as string);
-    }
-}
+};
 
 export async function loginUser({username, password}: {username: string, password: string}) 
 {

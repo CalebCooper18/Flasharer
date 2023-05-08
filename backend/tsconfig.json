@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,            
     "strict": true,                                      
     "noUnusedParameters": true,                       
-    "noImplicitReturns": true,                        
+    "noImplicitReturns": false,                        
     "noFallthroughCasesInSwitch": true,               
     "skipLibCheck": true                       
   }

@@ -16,17 +16,17 @@ const userSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minLength: 2,
+        minLength: [2, 'Your name must be more than 2 letters long'],
     },
     username:{
         type: String,
         required: true,
-        unique: true
+        unique: true, 
     },
     password: {
         type: String,
         required: true,
-        minLength: 5,
+        minLength: [5, 'Your password must be at least 5 characters or longer'],
     },
     decks: [{
         type: Schema.Types.ObjectId,
