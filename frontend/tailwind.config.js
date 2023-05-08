@@ -16,6 +16,10 @@ export default {
       screens: {
         xss: '450px'
       },
+      fontFamily: 
+      {
+        mono_space: ['Space Mono', 'monospace']
+      }
     },
   },
   plugins: [],
