@@ -5,17 +5,17 @@ import AppError from "../utils/appError";
 
 function handleValidationError(err: MongoError, res: Response)
 {
-    console.log('here');
-    let errorMessage = ''
-    if('keyValue' in err && typeof err.keyValue === 'object' && err.keyValue && 'username' in err.keyValue)
-    {  
-       const { username } = err.keyValue
-       errorMessage = `This username has already been taken (${username}) please try another`;
+    let errorMessage = '' 
+    if('errors' in err && err.errors && typeof err.errors === 'object')
+    {
+        const errors = Object.values(err.errors).map((el: any) => el.message)
+        errorMessage = errors.join(', ');
     }
     else 
     {
         errorMessage = 'Internal Server Error!';
     }
+    
     const newAppError = new AppError(errorMessage, 400);
     sendError(newAppError, res);
 }
@@ -41,7 +41,7 @@ function isMongoError(err: unknown): err is MongoError
 {
     if(err && typeof err === 'object')
     {
-        return 'name' in err && 'code' in err;
+        return ('name' in err && err.name === 'ValidationError') || 'code' in err;
     }
     return false
 }
@@ -69,10 +69,12 @@ function handleAllErrors(err: unknown, _req: Request, res: Response, _next: Next
     }
     else if (err instanceof AppError)
     {
+
         sendError(err, res);
     }
     else if (err instanceof Error)
     {
+
         const newError = new AppError(err.message, 500)
         sendError(newError, res);
     }
