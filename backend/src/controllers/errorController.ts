@@ -1,21 +1,13 @@
-import {Request, Response, NextFunction, response } from "express";
+import {Request, Response, NextFunction} from "express";
 import { MongoError } from "mongodb";
 import AppError from "../utils/appError";
+import mongoose from "mongoose";
 
 
-function handleValidationError(err: MongoError, res: Response)
+function handleValidationError(err: mongoose.Error.ValidationError , res: Response)
 {
-    let errorMessage = '' 
-    if('errors' in err && err.errors && typeof err.errors === 'object')
-    {
-        const errors = Object.values(err.errors).map((el: any) => el.message)
-        errorMessage = errors.join(', ');
-    }
-    else 
-    {
-        errorMessage = 'Internal Server Error!';
-    }
-    
+    const errors = Object.values(err.errors).map((el) => el.message)
+    const errorMessage = errors.join(', ');
     const newAppError = new AppError(errorMessage, 400);
     sendError(newAppError, res);
 }
@@ -37,13 +29,18 @@ function handleDuplicationError(err: MongoError, res: Response)
 }
 
 
-function isMongoError(err: unknown): err is MongoError 
+function isMongoError(err: unknown): err is MongoError
 {
     if(err && typeof err === 'object')
     {
-        return ('name' in err && err.name === 'ValidationError') || 'code' in err;
+        return 'code' in err;
     }
     return false
+}
+
+function isMongooseError(err: unknown): err is mongoose.Error 
+{
+    return err instanceof mongoose.Error;
 }
 
 
@@ -57,15 +54,16 @@ function sendError(err: AppError, res: Response)
     });
 }
 
-
-
 function handleAllErrors(err: unknown, _req: Request, res: Response, _next: NextFunction)
 {
 
     if(isMongoError(err))
     {
-        if (err.name === 'ValidationError') handleValidationError(err, res);
         if (err.code === 11000) handleDuplicationError(err, res);
+    }
+    else if (isMongooseError(err))
+    {
+        if (err instanceof mongoose.Error.ValidationError) handleValidationError(err, res);
     }
     else if (err instanceof AppError)
     {
@@ -74,7 +72,6 @@ function handleAllErrors(err: unknown, _req: Request, res: Response, _next: Next
     }
     else if (err instanceof Error)
     {
-
         const newError = new AppError(err.message, 500)
         sendError(newError, res);
     }

@@ -2,7 +2,6 @@ import { IUserDocument, IUser } from "../models/user";
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import { createUser, loginUser } from "../service/user.service";
-import { MongoError } from "mongodb";
 import AppError from "../utils/appError";
 
 function signToken(id: string)
@@ -42,22 +41,26 @@ async function registerHandler(req: Request, res: Response, next: NextFunction)
         const user = await createUser(req.body as IUser)
         return createJsonWebToken(user, 201, res);
     } catch(e: unknown) {
-
         return next(e)
     }
 }
 
 
-async function loginHandler(req: Request, res: Response)
+async function loginHandler(req: Request, res: Response, next: NextFunction)
 {
-    const user = await loginUser(req.body);
+    try {
+        const user = await loginUser(req.body);
 
-    if(!user)
-    {
-        return res.status(401).json('Invalid username or password');
+        if(!user)
+        {
+            return next(new AppError('Invalid Username or Password', 403));
+        }
+
+        return createJsonWebToken(user, 200, res);
+
+    } catch(e: unknown) {
+        return next(e)
     }
-
-    return createJsonWebToken(user, 200, res);
  
 }
 
