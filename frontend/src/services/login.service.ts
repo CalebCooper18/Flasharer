@@ -12,6 +12,10 @@ async function login(creds: UserLogin)
         body: JSON.stringify(creds)
     });
     const data = await res.json();
+    if(res.status !== 200)
+    {
+        throw new Error(data.error);
+    }
     return data.data;
 }
 

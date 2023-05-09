@@ -16,8 +16,8 @@ function App() {
   return (
     <>
       <Navbar user={user} />
+      {notification && <Notification message={notification.message} type={notification.type} /> }
       <div className='content-container xss:ms-[76px]'>
-        {notification && <Notification message={notification.message} type={notification.type} /> }
         <Routes>
           <Route path='/'/>
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />

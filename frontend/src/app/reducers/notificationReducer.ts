@@ -1,4 +1,5 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AnyAction, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { Dispatch } from "react";
 
 export interface INotification
 {
@@ -16,9 +17,9 @@ const notificationSlice = createSlice({
     reducers: {
         createNotification(_state, action: PayloadAction<Notification>)
         {
-            return action.payload
+            return action.payload;
         },
-        deleteNotification(_state, _action)
+        deleteNotification(_state)
         {
             return null;
         }
@@ -27,5 +28,24 @@ const notificationSlice = createSlice({
 })
 
 export const {createNotification, deleteNotification} = notificationSlice.actions;
+
+
+
+let timer: ReturnType<typeof setTimeout>
+
+export function createAndDeleteNotifcation(notification: INotification)
+{
+    return (dispatch: Dispatch<AnyAction>) => {
+        dispatch(createNotification(notification));
+        if(timer)
+        {
+            clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+            dispatch(deleteNotification())
+        }, 3000);
+
+    }
+}
 
 export default notificationSlice.reducer;
