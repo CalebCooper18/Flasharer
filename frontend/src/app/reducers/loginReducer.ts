@@ -3,15 +3,16 @@ import { User, UserLogin } from "../../types.ts"
 import loginService from "../../services/login.service.ts";
 import userService from "../../services/user.service.ts";
 import { Dispatch } from "react";
+import { createNotification } from "./notificationReducer.ts";
 
 type InitialState = {
     user: null | User;
-}
+};
 
 
 const initialState: InitialState = {
     user: null
-}
+};
 
 
 const loginSlice = createSlice({
@@ -39,6 +40,7 @@ export const loginUser = (creds: UserLogin) => {
         const user = await loginService.login(creds);
         userService.setUser(user);
         dispatch(login(user));
+        dispatch(createNotification({type: 'success', message: 'Successfully logged in!'}))
     }
 }
 

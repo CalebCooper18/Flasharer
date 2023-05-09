@@ -19,6 +19,17 @@ export default {
       fontFamily: 
       {
         mono_space: ['Space Mono', 'monospace']
+      },
+      keyframes : 
+      {
+        fadeIn: 
+        {
+          '0%': { transform: 'translateY(-30px)', opacity: '0%'},
+          '100%': { transform: 'translateY(0px)', opacity: '100%'}
+        }
+      },
+      animation : {
+        'fading-in': 'fadeIn 1s ease-in-out forwards'
       }
     },
   },

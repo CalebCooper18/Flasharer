@@ -56,7 +56,7 @@ body
 
     .content-container
     {
-        @apply bg-secondary h-screen text-white ms-12
+        @apply bg-secondary h-screen ms-12
     }
 
     .input-field
