@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch } from '../app/hooks';
-import { loginUser } from '../app/reducers/loginReducer';
+import { loginUser } from '../app/reducers/userReducer';
 
 export default function Login() {
 
@@ -16,8 +16,6 @@ export default function Login() {
         username,
         password
       }));
-      setUsername('');
-      setPassword('');
   }
 
 

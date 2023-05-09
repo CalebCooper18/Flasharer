@@ -9,7 +9,7 @@ import Notification from './components/Notification';
 
 function App() {
 
-  const user = useAppSelector(state => state.login.user);
+  const user = useAppSelector(state => state.users.user);
   const notification = useAppSelector(state =>  state.notification);
   const dispatch = useAppDispatch();
 

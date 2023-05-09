@@ -1,9 +1,11 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom';
-import createAccountService from '../services/createAccount.service';
+import { createUser } from '../app/reducers/userReducer';
+import { useAppDispatch } from '../app/hooks';
 
 export default function Register() {
 
+    const dispatch = useAppDispatch();
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -12,8 +14,11 @@ export default function Register() {
     function handleSubmit(e: SyntheticEvent)
     {
         e.preventDefault();
-
-        createAccountService.createAccount({name, username, password})
+        dispatch(createUser({
+            name,
+            username,
+            password
+        }));
     }
 
     return (

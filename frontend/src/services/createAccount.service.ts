@@ -1,7 +1,7 @@
 import { baseURl } from "../utils/constants";
-import { userCreate } from "../types";
+import { UserCreate } from "../types";
 
-async function createAccount(creds: userCreate)
+async function createAccount(creds: UserCreate)
 {
     const res = await fetch(`${baseURl}/user/signup`, {
         method: 'POST',
@@ -9,11 +9,13 @@ async function createAccount(creds: userCreate)
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(creds)
-    })
-    console.log(res);
+    }) 
     const data = await res.json();
-    console.log(data);
-    // console.log(data);
+    if(res.status !== 201)
+    {
+        throw new Error(data.error);
+    }
+    return data.data
 }
 
 export default {
