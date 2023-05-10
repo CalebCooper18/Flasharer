@@ -3,7 +3,6 @@ import { User, UserCreate, UserLogin } from "../../types.ts"
 import loginService from "../../services/login.service.ts";
 import userService from "../../services/user.service.ts";
 import createAccountService from "../../services/createAccount.service.ts";
-import { Dispatch } from "react";
 import { createAndDeleteNotifcation } from "./notificationReducer.ts";
 
 type InitialState = {
@@ -79,9 +78,10 @@ export function loginUser(creds: UserLogin){
 
 
 export function logoutUser() {
-    return (dispatch: Dispatch<AnyAction>) => {
+    return (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
         userService.clearUser();
         dispatch(logout(null));
+        dispatch(createAndDeleteNotifcation({type: 'success', message: 'Successfully logged out'}));
     }
     
 }

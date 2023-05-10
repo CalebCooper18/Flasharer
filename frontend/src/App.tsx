@@ -4,6 +4,9 @@ import Login from './pages/Login';
 import Navbar from './components/Navbar/Navbar';
 import Register from './pages/Register';
 import Notification from './components/Notification';
+import { useEffect } from 'react';
+import userService from './services/user.service';
+import { login } from './app/reducers/userReducer';
 
 
 
@@ -12,6 +15,14 @@ function App() {
   const user = useAppSelector(state => state.users.user);
   const notification = useAppSelector(state =>  state.notification);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const userInStorage = userService.checkIfUserLoggedIn();
+    if(userInStorage)
+    {
+      dispatch(login(userInStorage));
+    }
+  }, [])
 
   return (
     <>

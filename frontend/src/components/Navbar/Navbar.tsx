@@ -5,6 +5,7 @@ import IconLink from './IconLink';
 import Divider from './Divider';
 import { User } from '../../types';
 import { useState } from 'react';
+import IconBtn from './IconBtn';
 
 interface Props{
   user: User | null;
@@ -23,7 +24,7 @@ export default function Navbar({user}: Props) {
         <>
           <Divider />
           <div className='mt-auto'>
-            <IconLink icon={<AiOutlineLogout  size={22} />} text={'Logout'} linkLocation={'/'} setIsOpen={setIsOpen} />
+            <IconBtn icon={<AiOutlineLogout  size={22} />} text={'Logout'} setIsOpen={setIsOpen} />
             <IconLink icon={<AiOutlineUser size={22} />} text={'My Account'} linkLocation={'/me'} setIsOpen={setIsOpen} />
           </div>
         </>
