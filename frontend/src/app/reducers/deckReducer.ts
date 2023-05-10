@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import deckService from "../../services/deck.service";
 import { Deck } from "../../types";
 
 
@@ -21,5 +22,18 @@ const deckReducer = createSlice({
 
 export const {setDecks} = deckReducer.actions;
 
+export function initializeUserDecks()
+{
+    return async function(dispatch: ThunkDispatch<unknown, unknown, AnyAction>)
+    {
+        try {
+            const allDecks: Deck[] = await deckService.getAllUserDecks()
+            dispatch(setDecks(allDecks))
+
+        } catch (error) {
+            console.error('Error');
+        }
+    }
+}
 
 export default deckReducer.reducer;

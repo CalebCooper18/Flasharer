@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { createUser } from '../app/reducers/userReducer';
 import { useAppDispatch } from '../app/hooks';
