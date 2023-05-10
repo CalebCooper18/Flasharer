@@ -7,6 +7,7 @@ import Notification from './components/Notification';
 import { useEffect } from 'react';
 import userService from './services/user.service';
 import { login } from './app/reducers/userReducer';
+import MyAccount from './pages/MyAccount';
 
 
 
@@ -33,6 +34,7 @@ function App() {
           <Route path='/'/>
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
+          <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
         </Routes>
       </div>
     </>

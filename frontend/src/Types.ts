@@ -15,3 +15,21 @@ export interface User {
     username: string;
     token: string;
 }
+
+export interface Card {
+    id: string;
+    subject: string;
+    answer: string;
+}
+
+export interface Deck
+{
+     id: string
+     topic: string;
+     likedBy: string[]
+     likes: number;
+     cards: Card[];
+     tags: string[];
+     createdBy: string[];
+     shared: boolean;
+}
