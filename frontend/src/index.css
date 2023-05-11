@@ -68,8 +68,13 @@ body
     }
 
     .form-button {
-        @apply bg-vistaBlue p-2 w-full rounded-md text-2xl 
+        @apply bg-vistaBlue p-2 w-full rounded-md text-base xss:text-2xl
         transition-all duration-500 hover:bg-darkenVistaBlue
+    }
+
+    .form-card-button-template {
+        @apply p-3 w-full shadow-lg relative overflow-y-hidden
+        rounded-md active:scale-95 transition-all duration-200
     }
 }
 

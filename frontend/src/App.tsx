@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import userService from './services/user.service';
 import { login } from './app/reducers/userReducer';
 import MyAccount from './pages/MyAccount';
+import Create from './pages/Create';
 
 
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
+          <Route path='/create' element={true ? <Create /> : <Navigate to = '/' /> } />
         </Routes>
       </div>
     </>
