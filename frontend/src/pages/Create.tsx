@@ -2,6 +2,8 @@ import { useState } from "react"
 import { CreateCard} from "../types";
 import {v4 as uuid} from 'uuid'
 import CardListItem from "../components/CardListItem";
+import { useAppDispatch } from "../app/hooks";
+import { createAndDeleteNotifcation } from "../app/reducers/notificationReducer";
 
 
 export default function Create() {
@@ -11,14 +13,20 @@ export default function Create() {
     const [answer, setAnswer] = useState('');
     const [cards, setCards] = useState<CreateCard[]>([]);
     const [selctedCards, setSelectedCards] = useState<string[]>([]);
+    const dispatch = useAppDispatch();
 
     function handleAddCard()
     {
-        
+        if(!subject || !answer)
+        {
+            handleDispatchNotifcations('error', 'Missing subject or answer field');
+            return;
+        }   
         const id = uuid()
         setCards(prev => [...prev, {subject, answer, id}])
         setSubject('');
         setAnswer('');
+        handleDispatchNotifcations('success', 'Card Added');
     }
 
     function handleCardClick(id: string)
@@ -37,7 +45,20 @@ export default function Create() {
 
     function handleDeleteCards()
     {
+        if(selctedCards.length === 0)
+        {
+            handleDispatchNotifcations('error', 'No cards selected to delete');
+            return;
+        }
+        setCards(cards.filter(card => !selctedCards.includes(card.id as string)))
+        setSelectedCards([]);
+        handleDispatchNotifcations('success', 'Cards Deleted');
 
+    }
+
+    function handleDispatchNotifcations(type: string, message: string)
+    {
+        dispatch(createAndDeleteNotifcation({type, message}))
     }
 
   return (
@@ -69,7 +90,7 @@ export default function Create() {
                     </div>
                     <div className="w-full">
                         <button type="button" className="form-card-button-template bg-red-600 hover:bg-red-700
-                        active:bg-red-800 group">
+                        active:bg-red-800 group" onClick={handleDeleteCards}>
                             <span className="group-active:opacity-0 transition-all duration-200">Delete Cards</span>
                             <span className="absolute -translate-y-24 left-1/2 -translate-x-1/2 group-active:translate-y-0
                             transition-all duration-200">Cards Deleted</span>
@@ -77,14 +98,16 @@ export default function Create() {
                     </div>
                 </div>
                 <div className="flex w-full flex-col">
-                        <h3>All Cards:</h3>
-                        <ul className="bg-white w-full h-32 rounded-md overflow-y-scroll text-black">
-                           {cards.map(card => (
-                            <CardListItem key={card.id} front={card.subject} back={card.answer} 
-                            handleClick={() => handleCardClick(card.id as string)} selected={selctedCards.includes(card.id as string)}/>
-                           ))}
-                        </ul>
-                    </div>
+                    <h3>All Cards:</h3>
+                    <ul className="bg-white w-full h-32 rounded-md overflow-y-scroll text-black">
+                        {cards.map(card => (
+                        <CardListItem key={card.id} front={card.subject} back={card.answer} 
+                        handleClick={() => handleCardClick(card.id as string)} selected={selctedCards.includes(card.id as string)}/>
+                        ))}
+                    </ul>
+                </div>
+                <div className="flex w-full justify-between items-center">
+                </div>
             </form>
         </div>  
     </div>
