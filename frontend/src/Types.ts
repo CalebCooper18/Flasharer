@@ -16,10 +16,14 @@ export interface User {
     token: string;
 }
 
-export interface Card {
-    id: string;
+export interface CreateCard {
+    id?: string;
     subject: string;
     answer: string;
+}
+
+export interface Card extends CreateCard {
+    id: string;
 }
 
 export interface Deck
@@ -33,3 +37,5 @@ export interface Deck
      createdBy: string[];
      shared: boolean;
 }
+
+
