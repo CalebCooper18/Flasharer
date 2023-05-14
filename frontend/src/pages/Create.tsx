@@ -1,9 +1,12 @@
 import { useState } from "react"
-import { CreateCard} from "../types";
+import { CreateCard } from "../types";
 import {v4 as uuid} from 'uuid'
+
 import CardListItem from "../components/CardListItem";
+import TagsSelect from "../components/TagsSelect";
+
 import { useAppDispatch } from "../app/hooks";
-import { createAndDeleteNotifcation } from "../app/reducers/notificationReducer";
+import { createAndDeleteNotification } from "../app/reducers/notificationReducer";
 
 
 export default function Create() {
@@ -12,21 +15,24 @@ export default function Create() {
     const [subject, setSubject] = useState('');
     const [answer, setAnswer] = useState('');
     const [cards, setCards] = useState<CreateCard[]>([]);
-    const [selctedCards, setSelectedCards] = useState<string[]>([]);
+    const [selectedCards, setSelectedCards] = useState<string[]>([]);
+    const [tags, setTags] = useState<string[]>([])
     const dispatch = useAppDispatch();
+
+    console.log(tags);
 
     function handleAddCard()
     {
         if(!subject || !answer)
         {
-            handleDispatchNotifcations('error', 'Missing subject or answer field');
+            handleDispatchNotifications('error', 'Missing subject or answer field');
             return;
         }   
         const id = uuid()
         setCards(prev => [...prev, {subject, answer, id}])
         setSubject('');
         setAnswer('');
-        handleDispatchNotifcations('success', 'Card Added');
+        handleDispatchNotifications('success', 'Card Added');
     }
 
     function handleCardClick(id: string)
@@ -45,25 +51,25 @@ export default function Create() {
 
     function handleDeleteCards()
     {
-        if(selctedCards.length === 0)
+        if(selectedCards.length === 0)
         {
-            handleDispatchNotifcations('error', 'No cards selected to delete');
+            handleDispatchNotifications('error', 'No cards selected to delete');
             return;
         }
-        setCards(cards.filter(card => !selctedCards.includes(card.id as string)))
+        setCards(cards.filter(card => !selectedCards.includes(card.id as string)))
         setSelectedCards([]);
-        handleDispatchNotifcations('success', 'Cards Deleted');
+        handleDispatchNotifications('success', 'Cards Deleted');
 
     }
 
-    function handleDispatchNotifcations(type: string, message: string)
+    function handleDispatchNotifications(type: string, message: string)
     {
-        dispatch(createAndDeleteNotifcation({type, message}))
+        dispatch(createAndDeleteNotification({type, message}))
     }
 
   return (
     <div className="h-[800px] pt-10 w-full flex flex-col justify-center items-center text-white xss:h-[750px] xss:pt-20">
-        <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-3">
+        <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-5">
             <form className="w-full flex flex-col items-center gap-1 sm:gap-3">
                 <h3 className="underline leading-4 mb-5 text-center">Create a new Deck:</h3>
                 <div className="w-full flex gap-2 items-center flex-col sm:flex-row">
@@ -99,14 +105,25 @@ export default function Create() {
                 </div>
                 <div className="flex w-full flex-col">
                     <h3>All Cards:</h3>
+                    <small className="relative ml-2 text-gray-500 before:content-['*'] before:absolute 
+                    before:-top-1 before:-left-2 text-tiny">To delete click on multiple cards</small>
                     <ul className="bg-white w-full h-32 rounded-md overflow-y-scroll text-black">
                         {cards.map(card => (
                         <CardListItem key={card.id} front={card.subject} back={card.answer} 
-                        handleClick={() => handleCardClick(card.id as string)} selected={selctedCards.includes(card.id as string)}/>
+                        handleClick={() => handleCardClick(card.id as string)} selected={selectedCards.includes(card.id as string)}/>
                         ))}
                     </ul>
                 </div>
-                <div className="flex w-full justify-between items-center">
+                <div className="w-full">
+                    <h3 className="mb-1">Tags:</h3>
+                    <TagsSelect tags={tags} setTags={setTags} />
+                </div>
+                <div className="w-full">
+                    <h3>Shareable:</h3>
+                    <div className="inline-flex gap-1">
+                        <button>Yes</button>
+                        <button>No</button>
+                    </div>
                 </div>
             </form>
         </div>  

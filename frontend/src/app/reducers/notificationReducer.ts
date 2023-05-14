@@ -33,7 +33,7 @@ export const {createNotification, deleteNotification} = notificationSlice.action
 
 let timer: ReturnType<typeof setTimeout>
 
-export function createAndDeleteNotifcation(notification: INotification)
+export function createAndDeleteNotification(notification: INotification)
 {
     return (dispatch: Dispatch<AnyAction>) => {
         dispatch(createNotification(notification));

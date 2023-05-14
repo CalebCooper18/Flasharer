@@ -10,8 +10,6 @@ export default {
         primary: '#202225',
         secondary: '#23272A',
         textboxDark: '#35383a',
-        vistaBlue: '#738ADB',
-        darkenVistaBlue: '#6479c4'
       },
       screens: {
         xss: '450px'
@@ -19,6 +17,9 @@ export default {
       fontFamily: 
       {
         mono_space: ['Space Mono', 'monospace']
+      },
+      fontSize: {
+        tiny: '0.6rem'
       },
       keyframes : 
       {

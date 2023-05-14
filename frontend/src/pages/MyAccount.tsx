@@ -1,7 +1,10 @@
 import { useEffect } from "react"
+
+import Deck from "../components/DeckDisplay";
+
+
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { initializeUserDecks } from "../app/reducers/deckReducer";
-import Deck from "../components/DeckDisplay";
 
 export default function MyAccount() {
 

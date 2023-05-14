@@ -3,7 +3,7 @@ import { User, UserCreate, UserLogin } from "../../types.ts"
 import loginService from "../../services/login.service.ts";
 import userService from "../../services/user.service.ts";
 import createAccountService from "../../services/createAccount.service.ts";
-import { createAndDeleteNotifcation } from "./notificationReducer.ts";
+import { createAndDeleteNotification } from "./notificationReducer.ts";
 
 type InitialState = {
     user: null | User;
@@ -42,11 +42,11 @@ export function createUser(creds: UserCreate){
         const user = await createAccountService.createAccount(creds);
         userService.setUser(user);
         dispatch(login(user));
-        dispatch(createAndDeleteNotifcation({type: 'success', message: 'Successfully Created Account'}));
+        dispatch(createAndDeleteNotification({type: 'success', message: 'Successfully Created Account'}));
        } catch (error) {
             if(error instanceof Error)
             {
-               dispatch(createAndDeleteNotifcation({type: 'error', message: error.message}));
+               dispatch(createAndDeleteNotification({type: 'error', message: error.message}));
                return 
             }
 
@@ -63,11 +63,11 @@ export function loginUser(creds: UserLogin){
         const user = await loginService.login(creds);
         userService.setUser(user);
         dispatch(login(user));
-        dispatch(createAndDeleteNotifcation({type: 'success', message: 'Successfully logged in!'}));
+        dispatch(createAndDeleteNotification({type: 'success', message: 'Successfully logged in!'}));
        } catch (error) {
             if(error instanceof Error)
             {
-               dispatch(createAndDeleteNotifcation({type: 'error', message: error.message}));
+               dispatch(createAndDeleteNotification({type: 'error', message: error.message}));
                return 
             }
 
@@ -81,7 +81,7 @@ export function logoutUser() {
     return (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
         userService.clearUser();
         dispatch(logout(null));
-        dispatch(createAndDeleteNotifcation({type: 'success', message: 'Successfully logged out'}));
+        dispatch(createAndDeleteNotification({type: 'success', message: 'Successfully logged out'}));
     }
     
 }
