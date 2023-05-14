@@ -17,6 +17,7 @@ export default function Create() {
     const [cards, setCards] = useState<CreateCard[]>([]);
     const [selectedCards, setSelectedCards] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([])
+    const [shared, setShared] = useState(false);
     const dispatch = useAppDispatch();
 
     console.log(tags);
@@ -107,7 +108,7 @@ export default function Create() {
                     <h3>All Cards:</h3>
                     <small className="relative ml-2 text-gray-500 before:content-['*'] before:absolute 
                     before:-top-1 before:-left-2 text-tiny">To delete click on multiple cards</small>
-                    <ul className="bg-white w-full h-32 rounded-md overflow-y-scroll text-black">
+                    <ul className="bg-white w-full h-16 rounded-md overflow-y-scroll text-black sm:h-32">
                         {cards.map(card => (
                         <CardListItem key={card.id} front={card.subject} back={card.answer} 
                         handleClick={() => handleCardClick(card.id as string)} selected={selectedCards.includes(card.id as string)}/>
@@ -120,9 +121,14 @@ export default function Create() {
                 </div>
                 <div className="w-full">
                     <h3>Shareable:</h3>
-                    <div className="inline-flex gap-1">
-                        <button>Yes</button>
-                        <button>No</button>
+                    <div className="inline-flex gap-2">
+                        <button type="button" className={`relative after:content-[''] after:absolute 
+                        after:top-5 ${shared ? 'after:scale-100' : 'after:scale-0'} after:w-full after:h-0.5 after:left-0 after:hover:scale-100
+                     after:bg-purple-500 after:origin-left after:transition-all after:duration-700`
+                        } onClick={() => setShared(true)}>Yes</button>
+                        <button type="button" className={`relative after:content-[''] after:absolute 
+                        after:top-5 ${shared ? 'after:scale-0' : 'after:scale-100'} after:w-full after:h-0.5 after:left-0 after:hover:scale-100
+                     after:bg-purple-500 after:origin-left after:transition-all after:duration-700`} onClick={() => setShared(false)}>No</button>
                     </div>
                 </div>
             </form>
