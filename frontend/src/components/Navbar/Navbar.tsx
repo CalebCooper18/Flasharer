@@ -43,7 +43,7 @@ export default function Navbar({user}: Props) {
 
 
   return (
-   <nav className={`fixed z-50 top-0 left-0 h-screen ${isOpen ? 'w-full' : 'w-10'} text-green-500 bg-primary shadow-lg xss:w-16 transition-all duration-300 flex flex-col items-center`}>
+   <nav className={`fixed z-50 top-0 left-0 h-screen ${isOpen ? 'w-full' : 'w-10'} text-semiLightPurple bg-primary shadow-lg xss:w-16 transition-all duration-300 flex flex-col items-center`}>
     {!isOpen && 
     <button className='icon-btn mt-3 flex xss:hidden' onClick={() => setIsOpen(true)}>
       <GiHamburgerMenu size={22} />
