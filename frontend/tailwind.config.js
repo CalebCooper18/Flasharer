@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         primary: '#202225',
-        secondary: '#23272A',
+        secondary: '#764abc',
+        semiLightPurple: '#7c6ea7',
+        darkBackground: '#23272A',
         textboxDark: '#35383a',
       },
       screens: {

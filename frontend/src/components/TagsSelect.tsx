@@ -22,8 +22,8 @@ export default function TagsSelect({tags, setTags}: Props) {
   return (
     <div className="w-full border-b-2 border-solid border-white overflow-y-scroll max-h-16">
         {AllTags.map(tag =>(
-            <button className={`text-left w-full hover:cursor-pointer hover:bg-purple-400 
-            ${tags.includes(tag) ? 'bg-purple-400': ''}`} 
+            <button className={`text-left w-full hover:cursor-pointer hover:bg-semiLightPurple 
+            ${tags.includes(tag) ? 'bg-semiLightPurple': ''}`} 
             type="button" key={tag} onClick={() => handleClick(tag)}>{tag}</button>
         ))}
     </div>

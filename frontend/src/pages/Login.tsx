@@ -34,7 +34,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)} value={password} />
         </div>
         <div className='mt-6 flex justify-center w-3/4'>
-          <button className='form-button' type='submit'>
+          <button className='form-button-user-accounts' type='submit'>
             Login
           </button>
         </div>

@@ -17,10 +17,14 @@ const deckReducer = createSlice({
         {
             return action.payload
         },
+        createDeck(state, action: PayloadAction<Deck>)
+        {
+            state.push(action.payload);
+        }
     }
 })
 
-export const {setDecks} = deckReducer.actions;
+export const {setDecks, createDeck} = deckReducer.actions;
 
 export function initializeUserDecks()
 {

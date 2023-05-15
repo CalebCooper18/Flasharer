@@ -44,7 +44,7 @@ export default function Register() {
                     onChange={(e) => setPasswordConfirm(e.target.value)} value={passwordConfirm} /> 
                 </div>
                 <div className='mt-6 flex justify-center w-3/4'>
-                <button className='form-button' type='submit'>
+                <button className='form-button-user-accounts' type='submit'>
                     Create Account
                 </button>
                 </div>
