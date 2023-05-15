@@ -15,7 +15,7 @@ export default function DeckDisplay({deck, location}: Props) {
         <p className='text-xs line-clamp-2'>Number of cards: {deck.cards.length}</p>
         <p className='text-xs truncate'>Likes: {deck.likes}</p>
         <div className='absolute flex flex-col justify-center items-center scale-0 w-full h-full 
-        top-0 left-0 origin-center bg-purple-900 opacity-90 group-hover:scale-100 
+        top-0 left-0 origin-center bg-purple-900` opacity-90 group-hover:scale-100 
         transition-all duration-200 font-black '>
             <button className='hover:underline hover:text-black'>View</button>
             <button className='hover:underline hover:text-black'>Edit</button>

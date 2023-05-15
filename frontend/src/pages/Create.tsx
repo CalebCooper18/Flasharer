@@ -1,28 +1,26 @@
 import { useState } from "react"
-import { CreateCard } from "../types";
 import {v4 as uuid} from 'uuid'
 
 import CardListItem from "../components/CardListItem";
 import TagsSelect from "../components/TagsSelect";
 
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { createAndDeleteNotification } from "../app/reducers/notificationReducer";
+import {addCard} from "../app/reducers/cardsReducer";
 import AddCardBtn from "../components/AddCardBtn";
-import DeleteCardBtn from "../components/DeleteCardBtn";
+import UpdateCardBtn from "../components/UpdateCardBtn";
 
 
 export default function Create() {
-
     const [topic, setTopic] = useState('');
     const [subject, setSubject] = useState('');
     const [answer, setAnswer] = useState('');
-    const [cards, setCards] = useState<CreateCard[]>([]);
-    const [selectedCards, setSelectedCards] = useState<string[]>([]);
     const [tags, setTags] = useState<string[]>([])
     const [shared, setShared] = useState(false);
-    const dispatch = useAppDispatch();
+    const [cardId, setCardId] = useState('');
 
-    console.log(tags);
+    const dispatch = useAppDispatch();
+    const cards = useAppSelector(state => state.cards);
 
     function handleAddCard()
     {
@@ -32,37 +30,19 @@ export default function Create() {
             return;
         }   
         const id = uuid()
-        setCards(prev => [...prev, {subject, answer, id}])
-        setSubject('');
-        setAnswer('');
+        dispatch(addCard({
+            id,
+            subject,
+            answer
+        }))
+        clearCardFields();
         handleDispatchNotifications('success', 'Card Added');
     }
 
-    function handleCardClick(id: string)
+    function clearCardFields()
     {
-        setSelectedCards((prev) => {
-            if(prev.includes(id))
-            {
-                return prev.filter(card => card !== id);
-            }
-            else 
-            {
-                return [...prev, id];
-            }
-        })
-    }
-
-    function handleDeleteCards()
-    {
-        if(selectedCards.length === 0)
-        {
-            handleDispatchNotifications('error', 'No cards selected to delete');
-            return;
-        }
-        setCards(cards.filter(card => !selectedCards.includes(card.id as string)))
-        setSelectedCards([]);
-        handleDispatchNotifications('success', 'Cards Deleted');
-
+        setSubject('');
+        setAnswer('');
     }
 
     function handleDispatchNotifications(type: string, message: string)
@@ -71,7 +51,7 @@ export default function Create() {
     }
 
   return (
-    <div className="h-[800px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
+    <div className="h-[900px] min-w-[200px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
         <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-5">
             <form className="w-full flex flex-col items-center gap-1 sm:gap-3">
                 <h3 className="leading-4 mb-5 text-center">Create a new Deck:</h3>
@@ -93,17 +73,17 @@ export default function Create() {
                         <AddCardBtn handleAddCard={handleAddCard} />
                     </div>
                     <div className="w-full">
-                        <DeleteCardBtn handleDeleteCards={handleDeleteCards} />
+                        <UpdateCardBtn id={cardId} subject={subject} answer={answer} clearCardsFields={clearCardFields} setCardId ={setCardId}/>
                     </div>
                 </div>
                 <div className="flex w-full flex-col">
                     <h3>All Cards:</h3>
                     <small className="relative ml-2 text-gray-500 before:content-['*'] before:absolute 
                     before:-top-1 before:-left-2 text-tiny">To delete click on multiple cards</small>
-                    <ul className="bg-white w-full h-16 rounded-md overflow-y-scroll text-black sm:h-32">
+                    <ul className="bg-white w-full h-24 rounded-md overflow-y-scroll text-black sm:h-32">
                         {cards.map(card => (
-                        <CardListItem key={card.id} front={card.subject} back={card.answer} 
-                        handleClick={() => handleCardClick(card.id as string)} selected={selectedCards.includes(card.id as string)}/>
+                        <CardListItem key={card.id} subject={card.subject} answer={card.answer} id={card.id as string} 
+                        setCardId={setCardId} setSubject={setSubject} setAnswer={setAnswer}/>
                         ))}
                     </ul>
                 </div>
