@@ -1,10 +1,11 @@
 import { baseURl } from "../utils/constants";
 import userService from "./user.service";
+import { CreateDeck } from "../types";
 
 
 function config()
 {
-    return { 'Authorization': `Bearer ${userService.getToken()}`}
+    return { 'Authorization': `Bearer ${userService.getToken()}`, 'Content-Type': 'application/json'}
 }
 
 
@@ -25,19 +26,27 @@ async function getAllUserDecks()
 }
 
 
-//TODO: Create Deck type for sending to back end and connect it to the reducer
-// async function createUserDeck()
-// {
-//     const res = await fetch(`${baseURl}/deck` {
-//         method: 'POST',
-//         headers: config(),
-//         body: deck
-//     }
-//     )
-// }
+
+async function createUserDeck(deck :CreateDeck)
+{
+    const res = await fetch(`${baseURl}/deck`, {
+        method: 'POST',
+        headers: config(),
+        body: JSON.stringify(deck)
+        }
+    )
+    const data = await res.json();
+    console.log(data.error);
+    if(res.status !==  200)
+    {
+        throw new Error(data.error);
+    }
+    return data;
+}
 
 
 
 export default {
-    getAllUserDecks
+    getAllUserDecks,
+    createUserDeck
 }

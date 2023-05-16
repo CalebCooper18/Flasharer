@@ -1,19 +1,26 @@
 import { IUserDocument } from "../models/user";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createNewDeck, deleteDeck, findDeck, getAllSharedDecks, getAllUserDecks } from "../service/deck.service";
 import Deck, { IDeckDocument } from "../models/deck";
 import { UpdateWriteOpResult} from "mongoose";
+import AppError from "../utils/appError";
 
 
-async function createDeckHandler(req: Request, res: Response )
+async function createDeckHandler(req: Request, res: Response, next: NextFunction )
 {
-    try {
+    try 
+    {
+        console.log(req.body.topic);
+        if(!req.body.topic || !req.body.cards || typeof req.body.shared !== 'boolean')
+        {
+            return next(new AppError('Missing Fields', 400));
+        }
         const newDeck = await createNewDeck(req.body);
         return res.status(200).json(newDeck);
         
-    } catch (error: any) {
+    } catch (e: unknown) {
 
-        return res.status(400).json(error.message);
+        return next(e);
     }
 }
 

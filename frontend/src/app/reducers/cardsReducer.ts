@@ -22,12 +22,16 @@ const cardsReducer = createSlice({
        updateCard(state, action: PayloadAction<CreateCard>)
        {
             return state.map(card => card.id !== action.payload.id ? card : action.payload );
-       }
+       },
+       clearCards(_state)
+       {
+          return []
+       },
     }
 })
 
 
-export const {addCard, deleteCard, updateCard} = cardsReducer.actions;
+export const {addCard, deleteCard, updateCard, clearCards} = cardsReducer.actions;
 
 
 export default cardsReducer.reducer;

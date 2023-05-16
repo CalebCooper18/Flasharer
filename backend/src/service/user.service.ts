@@ -22,7 +22,7 @@ export async function createUser(userInput: IUser): Promise<IUserDocument>
         
         return loggedInUser;
         
-};
+}
 
 export async function loginUser({username, password}: {username: string, password: string}) 
 {

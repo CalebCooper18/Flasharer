@@ -1,14 +1,20 @@
-import { useState } from "react"
 import {v4 as uuid} from 'uuid'
+
+import { SyntheticEvent, useState } from "react"
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 import CardListItem from "../components/CardListItem";
 import TagsSelect from "../components/TagsSelect";
-
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { createAndDeleteNotification } from "../app/reducers/notificationReducer";
-import {addCard} from "../app/reducers/cardsReducer";
 import AddCardBtn from "../components/AddCardBtn";
 import UpdateCardBtn from "../components/UpdateCardBtn";
+
+
+import { createAndDeleteNotification } from "../app/reducers/notificationReducer";
+import { createNewUserDeck } from "../app/reducers/deckReducer";
+import {addCard, clearCards} from "../app/reducers/cardsReducer";
+
+
+import { CreateCard } from "../types";
 
 
 export default function Create() {
@@ -45,15 +51,46 @@ export default function Create() {
         setAnswer('');
     }
 
+    function clearAllFields()
+    {
+        setTopic('');
+        setCardId('');
+        setTags([]);
+        setShared(false);
+        dispatch(clearCards);
+        clearAllFields();
+    }
+
     function handleDispatchNotifications(type: string, message: string)
     {
         dispatch(createAndDeleteNotification({type, message}))
     }
 
+    function removeCardIds(cards: CreateCard[]): CreateCard[]
+    {
+        return cards.map(({subject, answer}) => ({subject , answer}))
+    }
+
+    function handleSubmit(e: SyntheticEvent)
+    {
+        e.preventDefault();
+
+        const newDeck = 
+        {
+            topic,
+            cards: removeCardIds(cards),
+            tags,
+            shared
+        }
+        dispatch(createNewUserDeck(newDeck));
+        dispatch(clearCards());
+        clearAllFields();
+    }
+
   return (
     <div className="h-[900px] min-w-[200px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
         <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-5">
-            <form className="w-full h-full flex flex-col items-center justify-around gap-1 sm:gap-3">
+            <form className="w-full h-full flex flex-col items-center justify-around gap-1 sm:gap-3" onSubmit={(e) => handleSubmit(e)}>
                 <h3 className="leading-4 mb-5 text-center">Create a new Deck:</h3>
                 <div className="w-full flex gap-2 items-center flex-col sm:flex-row">
                     <label className="min-w-fit">Topic Name:</label>
@@ -90,7 +127,7 @@ export default function Create() {
                 </div>
                 <div className="w-full">
                     <h3 className="my-2 py-0.5 overflow-x-scroll whitespace-nowrap">Tags: 
-                    {tags.map(tag => <span className="me-1 border border-semiLightPurple rounded-md text-tiny p-0.5">{tag}</span>)}
+                    {tags.map(tag => <span key={tag} className="me-1 border border-semiLightPurple rounded-md text-tiny p-0.5">{tag}</span>)}
                     </h3>
                     <TagsSelect tags={tags} setTags={setTags} />
                 </div>

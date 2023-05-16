@@ -34,7 +34,8 @@ const userSlice = createSlice({
 export const {login, logout} = userSlice.actions;
 
 
-export function createUser(creds: UserCreate){
+export function createUser(creds: UserCreate)
+{
     
     return async (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
        try 

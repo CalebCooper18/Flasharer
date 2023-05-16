@@ -12,7 +12,7 @@ export interface IDeck
      shared: boolean;
 }
 
-export interface IDeckDocument extends IDeck, Document {};
+export interface IDeckDocument extends IDeck, Document {}
 
 
 const deckSchema = new Schema({

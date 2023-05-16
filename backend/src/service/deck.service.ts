@@ -8,7 +8,7 @@ interface INewDeck extends IDeck {
 export async function createNewDeck(deckInput: INewDeck): Promise<IDeckDocument> {
    try {
         const user = deckInput.user;
-
+        console.log(user);
         const deck = new Deck({
             topic: deckInput.topic,
             likedBy: [],
@@ -26,8 +26,9 @@ export async function createNewDeck(deckInput: INewDeck): Promise<IDeckDocument>
 
        return newDeck
     
-   } catch (error: unknown) {
-        throw new Error(error as string)
+   } catch (error: unknown) 
+   {
+        throw new Error('Internal Error');     
    } 
 }
 

@@ -6,10 +6,10 @@ export interface IUser {
     username: string;
     password: string;
     decks?: Types.ObjectId[];
-};
+}
 
 export interface IUserDocument extends IUser, Document {
-    comparePasswords: (retrivedPassword: string, userPassword: string) => Promise<Boolean>
+    comparePasswords: (retrievedPassword: string, userPassword: string) => Promise<boolean>
 }
 
 const userSchema = new Schema({
@@ -46,9 +46,9 @@ userSchema.pre('save', async function(next) {
 
 })
 
-userSchema.methods.comparePasswords = async function (retrivedPassword: string, userPassword: string): Promise<Boolean>
+userSchema.methods.comparePasswords = async function (retrievedPassword: string, userPassword: string): Promise<boolean>
 {
-    return await bcrypt.compare(retrivedPassword, userPassword);
+    return await bcrypt.compare(retrievedPassword, userPassword);
 }
 
 userSchema.set('toJSON', {

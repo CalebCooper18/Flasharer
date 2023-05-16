@@ -26,16 +26,21 @@ export interface Card extends CreateCard {
     id: string;
 }
 
-export interface Deck
+export interface CreateDeck 
+{
+    topic: string,
+    cards: CreateCard[];
+    tags: string[];
+    shared: boolean;
+}
+
+export interface Deck extends CreateDeck
 {
      id: string
-     topic: string;
      likedBy: string[]
      likes: number;
      cards: Card[];
-     tags: string[];
      createdBy: string[];
-     shared: boolean;
 }
 
 
