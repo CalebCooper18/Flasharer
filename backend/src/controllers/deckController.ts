@@ -10,7 +10,6 @@ async function createDeckHandler(req: Request, res: Response, next: NextFunction
 {
     try 
     {
-        console.log(req.body.topic);
         if(!req.body.topic || !req.body.cards || typeof req.body.shared !== 'boolean')
         {
             return next(new AppError('Missing Fields', 400));

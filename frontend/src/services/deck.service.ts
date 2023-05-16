@@ -25,6 +25,22 @@ async function getAllUserDecks()
         
 }
 
+async function getAllSharedDecks() 
+{
+    const res = await fetch (`${baseURl}/deck`, {
+        method: 'GET',
+        headers: config(),
+    })
+
+    const data = await res.json();
+    console.log(data);
+    if(res.status !== 200)
+    {
+        throw new Error(data.error);
+    }
+    return data;
+}
+
 
 
 async function createUserDeck(deck :CreateDeck)
@@ -48,5 +64,6 @@ async function createUserDeck(deck :CreateDeck)
 
 export default {
     getAllUserDecks,
+    getAllSharedDecks,
     createUserDeck
 }

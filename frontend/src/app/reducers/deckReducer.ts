@@ -27,12 +27,13 @@ const deckReducer = createSlice({
 
 export const {setDecks, addDeck} = deckReducer.actions;
 
-export function initializeUserDecks()
+export function initializeDecks(userDecks: boolean)
 {
     return async function(dispatch: ThunkDispatch<unknown, unknown, AnyAction>)
     {
         try {
-            const allDecks: Deck[] = await deckService.getAllUserDecks()
+            console.log(userDecks);
+            const allDecks: Deck[] = userDecks ? await deckService.getAllUserDecks() : await deckService.getAllSharedDecks()
             dispatch(setDecks(allDecks))
 
         } catch (error) {
@@ -40,6 +41,7 @@ export function initializeUserDecks()
         }
     }
 }
+
 
 export function createNewUserDeck(deck: CreateDeck)
 {

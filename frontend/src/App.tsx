@@ -9,6 +9,7 @@ import userService from './services/user.service';
 import { login } from './app/reducers/userReducer';
 import MyAccount from './pages/MyAccount';
 import Create from './pages/Create';
+import View from './pages/View';
 
 
 
@@ -36,7 +37,8 @@ function App() {
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
-          <Route path='/create' element={true ? <Create /> : <Navigate to = '/' /> } />
+          <Route path='/create' element={user ? <Create /> : <Navigate to = '/' /> } />
+          <Route path='/view' element={user ? <View /> : <Navigate to = '/' />} /> 
         </Routes>
       </div>
     </>
