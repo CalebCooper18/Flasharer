@@ -10,7 +10,7 @@ interface InitialState{
 };
 
 const initialState: InitialState = {
-    user: null
+    user: userService.checkIfUserLoggedIn()
 };
 
 
@@ -58,7 +58,7 @@ export function createUser(creds: UserCreate)
 
 export function loginUser(creds: UserLogin){
     
-    return async (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
+    return async function (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) {
        try 
        {
         const user = await loginService.login(creds);
@@ -79,7 +79,7 @@ export function loginUser(creds: UserLogin){
 
 
 export function logoutUser() {
-    return (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
+    return function (dispatch: ThunkDispatch<unknown, unknown, AnyAction>) {
         userService.clearUser();
         dispatch(logout(null));
         dispatch(createAndDeleteNotification({type: 'success', message: 'Successfully logged out'}));

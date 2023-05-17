@@ -12,7 +12,6 @@ export default function AllDecks() {
     const dispatch = useAppDispatch();
     const decks = useAppSelector(state => state.deck.decks);
     const loading = useAppSelector(state => state.deck.isLoading);
-    console.log(loading);
 
     useEffect(() => {
       const abortController = new AbortController

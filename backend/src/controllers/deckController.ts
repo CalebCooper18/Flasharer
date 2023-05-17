@@ -50,7 +50,7 @@ async function getAllUsersDecksHandler(req: Request, res: Response){
 }
 
 
-async function getSingleDeckHandler(req: Request, res: Response)
+async function getSingleDeckHandler(req: Request, res: Response, next: NextFunction)
 {
     const id = req.params.id;
     const user: IUserDocument = req.body.user;
@@ -59,12 +59,12 @@ async function getSingleDeckHandler(req: Request, res: Response)
 
     if(!deck)
     {
-        return res.status(404).json({error: 'Deck does not exist'});
+        return next((new AppError('Deck does not exist', 404)));
     }
 
     if(!deck.shared && deck.createdBy.toString() !== user._id.toString())
     {
-        return res.status(403).json({error: 'Unauthorized'})
+        return next((new AppError('Unauthorized to see this deck', 403)));
     }
     
     return res.status(200).json(deck);

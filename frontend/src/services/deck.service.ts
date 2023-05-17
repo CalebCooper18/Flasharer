@@ -40,6 +40,20 @@ async function getAllSharedDecks()
     return data;
 }
 
+async function getSingleDeck(id: string)
+{  
+    const res = await fetch(`${baseURl}/deck/${id}`, {
+        method: 'GET',
+        headers: config()
+    })
+
+    const data = await res.json();
+    if(res.status !== 200)
+    {
+        throw new Error(data.error)
+    }
+    return data;
+}
 
 
 async function createUserDeck(deck:CreateDeck)
@@ -63,5 +77,6 @@ async function createUserDeck(deck:CreateDeck)
 export default {
     getAllUserDecks,
     getAllSharedDecks,
+    getSingleDeck,
     createUserDeck
 }

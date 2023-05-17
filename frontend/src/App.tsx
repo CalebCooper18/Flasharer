@@ -10,6 +10,7 @@ import { login } from './app/reducers/userReducer';
 import MyAccount from './pages/MyAccount';
 import Create from './pages/Create';
 import AllDecks from './pages/AllDecks';
+import SingleDeck from './pages/SingleDeck';
 
 
 
@@ -39,6 +40,7 @@ function App() {
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
           <Route path='/create' element={user ? <Create /> : <Navigate to = '/' /> } />
           <Route path='/sharedDecks' element={user ? <AllDecks /> : <Navigate to = '/' />} /> 
+          <Route path='/viewDeck/:id' element={user ? <SingleDeck /> : <Navigate to = '/' />} />
         </Routes>
       </div>
     </>
