@@ -55,16 +55,18 @@ async function getSingleDeckHandler(req: Request, res: Response, next: NextFunct
     const id = req.params.id;
     const user: IUserDocument = req.body.user;
 
+    console.log('here');
     const deck = await findDeck(id);
 
     if(!deck)
     {
-        return next((new AppError('Deck does not exist', 404)));
+        console.log('here');
+        return next(new AppError('Deck does not exist', 404));
     }
 
     if(!deck.shared && deck.createdBy.toString() !== user._id.toString())
     {
-        return next((new AppError('Unauthorized to see this deck', 403)));
+        return next(new AppError('Unauthorized to see this deck', 403));
     }
     
     return res.status(200).json(deck);

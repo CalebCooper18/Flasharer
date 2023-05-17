@@ -19,7 +19,7 @@ export default function DeckDisplay({deck, location}: Props) {
         <div className='absolute flex flex-col justify-center items-center scale-0 w-full h-full 
         top-0 left-0 origin-center bg-purple-900 opacity-90 group-hover:scale-100 
         transition-all duration-200 font-black '>
-            <Link to={`/viewDeck/:${deck.id}`}><button className='hover:underline hover:text-black'>View</button></Link>
+            <Link to={`/viewDeck/${deck.id}`}><button className='hover:underline hover:text-black'>View</button></Link>
             <button className='hover:underline hover:text-black'>Edit</button>
             <button className='hover:underline hover:text-red-600'>Delete</button>
         </div>

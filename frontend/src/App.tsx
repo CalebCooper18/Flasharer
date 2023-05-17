@@ -9,8 +9,8 @@ import userService from './services/user.service';
 import { login } from './app/reducers/userReducer';
 import MyAccount from './pages/MyAccount';
 import Create from './pages/Create';
-import AllDecks from './pages/AllDecks';
-import SingleDeck from './pages/SingleDeck';
+import AllDecksView from './pages/AllDecksView';
+import SingleDeckView from './pages/SingleDeckView';
 
 
 
@@ -39,8 +39,8 @@ function App() {
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
           <Route path='/create' element={user ? <Create /> : <Navigate to = '/' /> } />
-          <Route path='/sharedDecks' element={user ? <AllDecks /> : <Navigate to = '/' />} /> 
-          <Route path='/viewDeck/:id' element={user ? <SingleDeck /> : <Navigate to = '/' />} />
+          <Route path='/sharedDecks' element={user ? <AllDecksView /> : <Navigate to = '/' />} /> 
+          <Route path='/viewDeck/:id' element={user ? <SingleDeckView /> : <Navigate to = '/' />} />
         </Routes>
       </div>
     </>

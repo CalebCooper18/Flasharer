@@ -59,7 +59,7 @@ export async function findDeck(id: string)
         const deck = await Deck.findById(id);
         return deck;
     } catch (error) {
-        throw new Error();
+        return false;
     }
 }
 

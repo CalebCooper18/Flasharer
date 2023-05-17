@@ -7,7 +7,7 @@ import LoadingDots from "../components/LoadingDots";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { initializeDecks } from "../app/reducers/deckReducer";
 
-export default function AllDecks() {
+export default function AllDecksView() {
     
     const dispatch = useAppDispatch();
     const decks = useAppSelector(state => state.deck.decks);
