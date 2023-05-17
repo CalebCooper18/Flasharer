@@ -4,9 +4,15 @@ import { CreateDeck, Deck } from "../../types";
 import { createAndDeleteNotification } from "./notificationReducer";
 
 
-type InitialState = Deck[];
+interface InitialState{
+    decks: Deck[];
+    isLoading: boolean;
+}
 
-const initialState: InitialState = []
+const initialState: InitialState = {
+    decks: [],
+    isLoading: false
+}
 
 
 const deckReducer = createSlice({
@@ -14,30 +20,43 @@ const deckReducer = createSlice({
     initialState,
     reducers: 
     {
-        setDecks(_state, action: PayloadAction<Deck[]>)
+        setDecks(state, action: PayloadAction<Deck[]>)
         {
-            return action.payload
+            state.decks = action.payload
         },
         addDeck(state, action: PayloadAction<Deck>)
         {
-            state.push(action.payload);
+            state.decks.push(action.payload);
+        },
+        setIsLoading(state, action: PayloadAction<boolean>)
+        {
+            state.isLoading = action.payload;
         }
     }
 })
 
-export const {setDecks, addDeck} = deckReducer.actions;
+export const {setDecks, addDeck, setIsLoading} = deckReducer.actions;
 
-export function initializeDecks(userDecks: boolean)
+export function initializeDecks(userDecks: boolean, signal: AbortSignal)
 {
     return async function(dispatch: ThunkDispatch<unknown, unknown, AnyAction>)
     {
         try {
-            console.log(userDecks);
+            dispatch(setIsLoading(true))
             const allDecks: Deck[] = userDecks ? await deckService.getAllUserDecks() : await deckService.getAllSharedDecks()
-            dispatch(setDecks(allDecks))
+            
+            console.log(signal.aborted);
+            if(!signal.aborted)
+            {
+                console.log(signal.aborted)
+                dispatch(setDecks(allDecks))
+                dispatch(setIsLoading(false))
+            }
+            console.log(signal.aborted)
 
         } catch (error) {
             console.error('Error');
+            setIsLoading(false);
         }
     }
 }

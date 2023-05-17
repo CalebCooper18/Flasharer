@@ -58,7 +58,7 @@ export default function Create() {
         setTags([]);
         setShared(false);
         dispatch(clearCards);
-        clearAllFields();
+        clearCardFields();
     }
 
     function handleDispatchNotifications(type: string, message: string)

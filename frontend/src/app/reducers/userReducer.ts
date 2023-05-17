@@ -5,7 +5,7 @@ import userService from "../../services/user.service.ts";
 import createAccountService from "../../services/createAccount.service.ts";
 import { createAndDeleteNotification } from "./notificationReducer.ts";
 
-type InitialState = {
+interface InitialState{
     user: null | User;
 };
 

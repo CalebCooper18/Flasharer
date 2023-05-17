@@ -36,7 +36,7 @@ async function registerHandler(req: Request, res: Response, next: NextFunction)
     {
         if(!req.body.password || !req.body.name || !req.body.username)
         {
-            return next(new AppError('Missing Credinitals', 400))
+            return next(new AppError('Missing Credentials', 400))
         }
         const user = await createUser(req.body as IUser)
         return createJsonWebToken(user, 201, res);

@@ -6,7 +6,8 @@ interface Props {
 }
 
 export default function DeckDisplay({deck, location}: Props) {
-    console.log(location);
+    const apple = location 
+    
   return (
     <div className=' relative h-40 w-full bg-black border-double border-4 border-gray-100
     pl-2 text-white flex flex-col justify-between pt-2 hover:-translate-y-1

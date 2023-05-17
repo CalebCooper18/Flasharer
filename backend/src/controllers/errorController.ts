@@ -54,6 +54,7 @@ function sendError(err: AppError, res: Response)
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleAllErrors(err: unknown, _req: Request, res: Response, _next: NextFunction)
 {
 

@@ -41,7 +41,6 @@ async function getAllUsersDecksHandler(req: Request, res: Response){
    try 
    {
         const allUserDecks = await getAllUserDecks(user);
-        console.log(allUserDecks);
         return res.status(200).json(allUserDecks);
 
    } catch (error) 

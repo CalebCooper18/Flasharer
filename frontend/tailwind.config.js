@@ -29,10 +29,17 @@ export default {
         {
           '0%': { transform: 'translateY(30px)', opacity: '0%'},
           '100%': { transform: 'translateY(0px)', opacity: '100%'}
+        },
+        altBounce: 
+        {
+          '0%': {transform: 'translateY(0%)'},
+          '50%': {transform: 'translateY(-25%)'},
+          '95%': {transform: 'translateY(2%)'}
         }
       },
       animation : {
-        'fading-in': 'fadeIn 1s ease-in-out forwards'
+        'fading-in': 'fadeIn 1s ease-in-out forwards',
+        'alt-bounce': 'altBounce 1s infinite'
       }
     },
   },

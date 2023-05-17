@@ -8,7 +8,7 @@ const store = configureStore({
     reducer: {
        users: userReducer, 
        notification: notificationReducer,
-       decks: deckReducer,
+       deck: deckReducer,
        cards: cardsReducer
     }
 })

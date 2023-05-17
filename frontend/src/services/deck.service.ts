@@ -33,7 +33,6 @@ async function getAllSharedDecks()
     })
 
     const data = await res.json();
-    console.log(data);
     if(res.status !== 200)
     {
         throw new Error(data.error);
@@ -43,7 +42,7 @@ async function getAllSharedDecks()
 
 
 
-async function createUserDeck(deck :CreateDeck)
+async function createUserDeck(deck:CreateDeck)
 {
     const res = await fetch(`${baseURl}/deck`, {
         method: 'POST',
@@ -52,7 +51,6 @@ async function createUserDeck(deck :CreateDeck)
         }
     )
     const data = await res.json();
-    console.log(data.error);
     if(res.status !==  200)
     {
         throw new Error(data.error);

@@ -52,8 +52,8 @@ export default function Navbar({user}: Props) {
     <div className={`m-0 mt-5 p-0 h-full flex-col items-center ${isOpen ? 'flex' : 'hidden'} xss:flex xss:mt-2 transition-all duration-300`}>
     <IconLink icon={<AiFillHome size={22}/>} text={'Home'} linkLocation={'/'} setIsOpen={setIsOpen} />
     <Divider />
-    <IconLink icon={<MdCreate size={22} />} text={'Create'} linkLocation={'/create'} setIsOpen={setIsOpen} />
-    <IconLink icon={<AiOutlineEye size={22} />} text={'View'} linkLocation={'/view'} setIsOpen={setIsOpen} />
+    <IconLink icon={<MdCreate size={22} />} text={'Create Deck'} linkLocation={'/create'} setIsOpen={setIsOpen} />
+    <IconLink icon={<AiOutlineEye size={22} />} text={'All Shared Decks'} linkLocation={'/sharedDecks'} setIsOpen={setIsOpen} />
     <IconLink icon={<AiOutlineInfoCircle size={22} />} text='About' linkLocation={'/about'} setIsOpen={setIsOpen} />
     {userLoggedIn()}
     {isOpen &&
