@@ -10,9 +10,7 @@ export default function DeckDisplay({deck, location}: Props) {
     const apple = location 
     
   return (
-    <div className=' relative h-40 w-full bg-black border-double border-4 border-gray-100
-    pl-2 text-white flex flex-col justify-between pt-2 hover:-translate-y-1
-    hover:cursor-pointer transition-transform duration-300 ease-in-out group'>
+    <div className='deck-grid-item-template group'>
         <p className='text-base line-clamp-2'>Topic: {deck.topic}</p>
         <p className='text-xs line-clamp-2'>Number of cards: {deck.cards.length}</p>
         <p className='text-xs truncate'>Likes: {deck.likes}</p>

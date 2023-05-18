@@ -134,13 +134,10 @@ export default function Create() {
                 <div className="w-full">
                     <h3>Shareable:</h3>
                     <div className="inline-flex gap-2">
-                        <button type="button" className={`relative after:content-[''] after:absolute 
-                        after:top-5 ${shared ? 'after:scale-100' : 'after:scale-0'} after:w-full after:h-0.5 after:left-0 after:hover:scale-100
-                     after:bg-purple-500 after:origin-left after:transition-all after:duration-700`
+                        <button type="button" className={`share-btn-template ${shared ? 'after:scale-100' : 'after:scale-0'}`
                         } onClick={() => setShared(true)}>Yes</button>
-                        <button type="button" className={`relative after:content-[''] after:absolute 
-                        after:top-5 ${shared ? 'after:scale-0' : 'after:scale-100'} after:w-full after:h-0.5 after:left-0 after:hover:scale-100
-                     after:bg-purple-500 after:origin-left after:transition-all after:duration-700`} onClick={() => setShared(false)}>No</button>
+                        <button type="button" className={`share-btn-template ${shared ? 'after:scale-0' : 'after:scale-100'}`} 
+                        onClick={() => setShared(false)}>No</button>
                     </div>
                 </div>
                 <button className="w-full text-center justify-self-end bg-semiLightPurple rounded-lg p-1 hover:bg-purple-800 transition-all duration-500
