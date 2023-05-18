@@ -15,13 +15,13 @@ export default function CardGridItem({front, back}: Props) {
             <div className={`card-grid-item-template bg-white after:content-['Click_to_see_answer']
             ${showAnswer ? 'rotate-X-90' : 'rotate-X-0 hover:after:opacity-100 hover:after:animate-bounce'}`} 
             onClick={() => setShowAnswer(true)}>
-                <h2 className="line-clamp-4 break-words">{front}</h2>
+                <p className="line-clamp-4 break-words">{front}</p>
             </div>
             <div className={`card-grid-item-template 
-            bg-black text-white after:content-['Click_to_see_Question']
+            bg-purple-600 text-white after:content-['Click_to_see_Question']
             ${showAnswer ? 'rotate-X-0 hover:after:opacity-100 hover:after:animate-bounce' : 'rotate-X-90'}`} 
             onClick={() => setShowAnswer(false)}>
-                <h2 className="line-clamp-4 break-words">{back}</h2>
+                <p className="line-clamp-4 break-words">{back}</p>
             </div>
         </div>
         </div>

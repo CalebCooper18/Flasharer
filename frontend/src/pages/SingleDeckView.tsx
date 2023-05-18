@@ -7,6 +7,7 @@ import LoadingDots from '../components/LoadingDots';
 import { Deck } from '../types';
 import CardGridItem from '../components/CardGridItem'
 import GridViewBtn from '../components/GridViewBtn';
+import CardCarousel from '../components/CardCarousel/CardCarousel';
 
 export default function SingleDeckView() {
 
@@ -68,6 +69,7 @@ export default function SingleDeckView() {
             {deck.cards.map((card => <CardGridItem key={card.id} front={card.subject} back={card.answer} /> ))}
         </div>
         }
+        {!gridView && <CardCarousel cards={deck.cards} />}
     </section>    
   )
 }
