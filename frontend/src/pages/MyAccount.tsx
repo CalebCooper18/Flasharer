@@ -26,12 +26,12 @@ export default function MyAccount() {
 
 
   return (
-    <>
+    <section>
         <h2 className="text-center text-2xl text-white capitalize py-6 underline">My Decks</h2>
         {loading && <LoadingDots />}
         <div className="mx-4 grid grid-cols-1 xss:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {!loading && decks.map((deck => <Deck key={deck.id} deck={deck} location="user" />))}
         </div>
-    </>
+    </section>
   )
 }
