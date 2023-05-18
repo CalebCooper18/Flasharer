@@ -95,21 +95,5 @@ body
     {
         transform: rotateX(-90deg);
     }
-
-    .rotate-X-10 
-    {
-        transform: rotateX(40deg);
-    }
-
-    .-rotate-Y-10 
-    {
-        transform: rotateY(-20deg);
-    }
-
-    .threeD
-    {
-        transform-style: preserve-3d;
-    }
-
 }
 

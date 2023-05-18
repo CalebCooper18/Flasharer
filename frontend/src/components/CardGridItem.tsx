@@ -17,7 +17,7 @@ export default function CardGridItem({front, back}: Props) {
             after:transition-all after:duration-200 after:content-['Click_to_see_answer'] after:absolute after:-bottom-0 after:opacity-0 
             ${showAnswer ? 'rotate-X-90' : 'rotate-X-0 hover:after:opacity-100 hover:after:animate-bounce'}`} 
             onClick={() => setShowAnswer(true)}>
-                <h2 className="line-clamp-4 break-words">{front}</h2>
+                <h2 className="line-clamp-4 break-words">`{front}</h2>
             </div>
             <div className={`absolute w-full h-full flex items-center justify-center rounded-lg p-4 
             bg-black text-white shadow-lg shadow-black transition-all duration-500 

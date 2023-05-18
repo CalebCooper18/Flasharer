@@ -36,19 +36,10 @@ export default {
           '50%': {transform: 'translateY(-25%)'},
           '95%': {transform: 'translateY(2%)'}
         },
-        rotateJiggle: 
-        {
-          '0%': {transform: 'rotateY(0deg)'},
-          '25%': {transform: 'rotateY(30deg)'},
-          '50%': {transform: 'rotateY(40deg)'},
-          '75%': {transform: 'rotateY(50deg)'},
-          '100%': {transform: 'rotateY(0deg)'}
-        }
       },
       animation : {
         'fading-in': 'fadeIn 1s ease-in-out forwards',
         'alt-bounce': 'altBounce 1s infinite',
-        'jiggle': 'rotateJiggle 2s ease-in-out'
       },
     },
   },
