@@ -72,11 +72,26 @@ async function createUserDeck(deck:CreateDeck)
     return data;
 }
 
+async function deleteUserDeck(id: string)
+{
+    const res = await fetch(`${baseURl}/deck/${id}`, {
+        method: 'DELETE',
+        headers: config()
+    })
+    if(res.status !== 204)
+    {
+        const data = await res.json();
+        throw new Error(data.error)
+    }
+    return res;
+}
+
 
 
 export default {
     getAllUserDecks,
     getAllSharedDecks,
     getSingleDeck,
-    createUserDeck
+    createUserDeck,
+    deleteUserDeck
 }

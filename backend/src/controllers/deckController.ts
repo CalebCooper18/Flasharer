@@ -55,12 +55,11 @@ async function getSingleDeckHandler(req: Request, res: Response, next: NextFunct
     const id = req.params.id;
     const user: IUserDocument = req.body.user;
 
-    console.log('here');
     const deck = await findDeck(id);
 
     if(!deck)
     {
-        console.log('here');
+       
         return next(new AppError('Deck does not exist', 404));
     }
 

@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import User, { IUserDocument } from '../models/user';
 import { findDeck } from '../service/deck.service';
+import AppError from './appError';
 
 
 export function unknownEndpoint(_req: Request, res: Response)
@@ -13,7 +14,6 @@ export async function authToken(req: Request, res: Response, next: NextFunction)
 {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
-    console.log(authHeader);
 
     if(!token)
     {
@@ -38,7 +38,7 @@ export async function authToken(req: Request, res: Response, next: NextFunction)
     
 }
 
-export async function checkDeckOwnerShip(req: Request, res: Response, next: NextFunction)
+export async function checkDeckOwnerShip(req: Request, _res: Response, next: NextFunction)
 {
     const user: IUserDocument = req.body.user;
     const id = req.params.id;
@@ -47,12 +47,12 @@ export async function checkDeckOwnerShip(req: Request, res: Response, next: Next
 
     if(!deckToCheckOwnerShip)
     {
-        return res.status(404).json({error: 'Deck does not exist'});
+        return next(new AppError('This deck does not exist', 404))
     }
 
     if(deckToCheckOwnerShip.createdBy.toString() !== user._id.toString())
     {
-        return res.status(403).json({error: 'User does not have access to this deck'});
+        return next(new AppError('User does not have access to this deck', 403));
     }
 
     req.body.deck = deckToCheckOwnerShip;

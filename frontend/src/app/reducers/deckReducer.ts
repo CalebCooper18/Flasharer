@@ -28,6 +28,10 @@ const deckReducer = createSlice({
         {
             state.decks.push(action.payload);
         },
+        deleteDeck(state, action: PayloadAction<string>)
+        {
+           return {...state, decks: state.decks.filter(deck => deck.id !== action.payload)}
+        },
         setIsLoading(state, action: PayloadAction<boolean>)
         {
             state.isLoading = action.payload;
@@ -35,7 +39,7 @@ const deckReducer = createSlice({
     }
 })
 
-export const {setDecks, addDeck, setIsLoading} = deckReducer.actions;
+export const {setDecks, addDeck, deleteDeck, setIsLoading} = deckReducer.actions;
 
 export function initializeDecks(userDecks: boolean, signal: AbortSignal)
 {
@@ -45,14 +49,12 @@ export function initializeDecks(userDecks: boolean, signal: AbortSignal)
             dispatch(setIsLoading(true))
             const allDecks: Deck[] = userDecks ? await deckService.getAllUserDecks() : await deckService.getAllSharedDecks()
             
-            console.log(signal.aborted);
             if(!signal.aborted)
             {
                 console.log(signal.aborted)
                 dispatch(setDecks(allDecks))
                 dispatch(setIsLoading(false))
             }
-            console.log(signal.aborted)
 
         } catch (error) {
             console.error('Error');
@@ -82,6 +84,29 @@ export function createNewUserDeck(deck: CreateDeck)
             }))
         }
     } 
+}
+
+export function deleteUserDeckReduce(id: string)
+{
+    return async function(dispatch: ThunkDispatch<unknown, unknown, AnyAction>)
+    {
+        try 
+        {
+            await deckService.deleteUserDeck(id);
+            dispatch(deleteDeck(id))
+            dispatch(createAndDeleteNotification({
+                type: 'success',
+                message: 'Deck has been deleted'
+            }))    
+            
+        } catch (error) {
+            console.log(error);
+            dispatch(createAndDeleteNotification({
+                type: 'error',
+                message: 'Internal error please try again later!'
+            }))
+        }
+    }
 }
 
 export default deckReducer.reducer;
