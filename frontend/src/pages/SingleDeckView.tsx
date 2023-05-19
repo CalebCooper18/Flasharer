@@ -60,6 +60,7 @@ export default function SingleDeckView() {
         )
     }
 
+    console.log(deck.cards.map(deck => deck.id));
   return (
     <section>
         <h2 className='text-center text-2xl text-white capitalize py-6 underline'>{deck.topic}</h2>
