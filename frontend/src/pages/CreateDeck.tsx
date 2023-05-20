@@ -7,13 +7,11 @@ import { createAndDeleteNotification } from "../app/reducers/notificationReducer
 import { createNewUserDeck } from "../app/reducers/deckReducer";
 import {addCard, clearCards} from "../app/reducers/cardsReducer";
 
-import CardListItem from "../components/CardListItem";
-import TagsSelect from "../components/TagsSelect";
-import AddCardBtn from "../components/AddCardBtn";
-import UpdateCardBtn from "../components/UpdateCardBtn";
-
-
-
+import TagsSelect from "../components/DeckForm/TagsSelect";
+import AddCardBtn from "../components/DeckForm/AddCardBtn";
+import UpdateCardBtn from "../components/DeckForm/UpdateCardBtn";
+import DeckShared from '../components/DeckForm/DeckShared';
+import CardList from '../components/DeckForm/CardList';
 
 import { CreateCard } from "../types";
 
@@ -117,30 +115,14 @@ export default function Create() {
                         <UpdateCardBtn id={cardId} subject={subject} answer={answer} clearCardsFields={clearCardFields} setCardId={setCardId}/>
                     </div>
                 </div>
-                <div className="flex w-full flex-col">
-                    <h3 className="mb-2">All Cards:</h3>
-                    <ul className="bg-white w-full h-24 rounded-md overflow-y-scroll text-black sm:h-32">
-                        {cards.map(card => (
-                        <CardListItem key={card.id} subject={card.subject} answer={card.answer} id={card.id as string} 
-                        setCardId={setCardId} setSubject={setSubject} setAnswer={setAnswer}/>
-                        ))}
-                    </ul>
-                </div>
+                <CardList cards={cards} setCardId={setCardId} setSubject={setSubject} setAnswer={setAnswer} />
                 <div className="w-full">
                     <h3 className="my-2 py-0.5 overflow-x-scroll whitespace-nowrap">Tags: 
                     {tags.map(tag => <span key={tag} className="me-1 border border-semiLightPurple rounded-md text-tiny p-0.5">{tag}</span>)}
                     </h3>
                     <TagsSelect tags={tags} setTags={setTags} />
                 </div>
-                <div className="w-full">
-                    <h3>Shareable:</h3>
-                    <div className="inline-flex gap-2">
-                        <button type="button" className={`share-btn-template ${shared ? 'after:scale-100' : 'after:scale-0'}`
-                        } onClick={() => setShared(true)}>Yes</button>
-                        <button type="button" className={`share-btn-template ${shared ? 'after:scale-0' : 'after:scale-100'}`} 
-                        onClick={() => setShared(false)}>No</button>
-                    </div>
-                </div>
+                <DeckShared setShared={setShared} shared={shared} />
                 <button className="w-full text-center justify-self-end bg-semiLightPurple rounded-lg p-1 hover:bg-purple-800 transition-all duration-500
                 active:scale-95 active:opacity-80">
                     Create Deck

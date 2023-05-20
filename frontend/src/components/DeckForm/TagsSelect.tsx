@@ -1,4 +1,4 @@
-import { AllTags } from "../utils/constants";
+import { AllTags } from "../../utils/constants";
 
 interface Props {
     tags: string[];
