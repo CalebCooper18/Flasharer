@@ -6,7 +6,7 @@ import cardsReducer from "./reducers/cardsReducer";
 
 const store = configureStore({
     reducer: {
-       users: userReducer, 
+       user: userReducer, 
        notification: notificationReducer,
        deck: deckReducer,
        cards: cardsReducer

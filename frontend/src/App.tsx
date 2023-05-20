@@ -1,22 +1,25 @@
 import {Routes, Route, Navigate} from 'react-router-dom'
+import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from './app/hooks';
+import { login } from './app/reducers/userReducer';
+
 import Login from './pages/Login';
 import Navbar from './components/Navbar/Navbar';
 import Register from './pages/Register';
 import Notification from './components/Notification';
-import { useEffect } from 'react';
-import userService from './services/user.service';
-import { login } from './app/reducers/userReducer';
 import MyAccount from './pages/MyAccount';
-import Create from './pages/Create';
+import Create from './pages/CreateDeck';
 import AllDecksView from './pages/AllDecksView';
 import SingleDeckView from './pages/SingleDeckView';
+
+import userService from './services/user.service';
 
 
 
 function App() {
 
-  const user = useAppSelector(state => state.users.user);
+  const user = useAppSelector(state => state.user.user);
   const notification = useAppSelector(state =>  state.notification);
   const dispatch = useAppDispatch();
 

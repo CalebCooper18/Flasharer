@@ -1,4 +1,5 @@
-import React, { ReactNode} from 'react'
+import React, { ReactNode } from 'react'
+
 import { logoutUser } from '../../app/reducers/userReducer';
 import { useAppDispatch } from '../../app/hooks';
 

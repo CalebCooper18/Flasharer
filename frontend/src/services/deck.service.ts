@@ -1,5 +1,7 @@
 import { baseURl } from "../utils/constants";
+
 import userService from "./user.service";
+
 import { CreateDeck } from "../types";
 
 
@@ -86,6 +88,20 @@ async function deleteUserDeck(id: string)
     return res;
 }
 
+async function updateDeckLikes(id: string)
+{
+    const res = await fetch(`${baseURl}/deck/${id}/likes`, {
+        method: 'PATCH',
+        headers: config()
+    })
+    const data = await res.json();
+    if(res.status !== 200)
+    {  
+        throw new Error(data.error);
+    }
+    return data;
+}
+
 
 
 export default {
@@ -93,5 +109,6 @@ export default {
     getAllSharedDecks,
     getSingleDeck,
     createUserDeck,
-    deleteUserDeck
+    deleteUserDeck,
+    updateDeckLikes
 }

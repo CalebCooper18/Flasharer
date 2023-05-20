@@ -1,4 +1,5 @@
 import { baseURl } from "../utils/constants";
+
 import { UserCreate } from "../types";
 
 async function createAccount(creds: UserCreate)

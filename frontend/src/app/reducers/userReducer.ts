@@ -1,11 +1,12 @@
 import { AnyAction, createSlice, PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { User, UserCreate, UserLogin } from "../../types.ts"
+import { createAndDeleteNotification } from "./notificationReducer.ts";
+
 import loginService from "../../services/login.service.ts";
 import userService from "../../services/user.service.ts";
 import createAccountService from "../../services/createAccount.service.ts";
-import { createAndDeleteNotification } from "./notificationReducer.ts";
 
-interface InitialState{
+import { User, UserCreate, UserLogin } from "../../types.ts"
+interface InitialState {
     user: null | User;
 };
 

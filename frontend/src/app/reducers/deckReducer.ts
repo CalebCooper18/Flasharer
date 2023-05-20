@@ -1,7 +1,9 @@
 import { PayloadAction, createSlice, ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
-import deckService from "../../services/deck.service";
-import { CreateDeck, Deck } from "../../types";
 import { createAndDeleteNotification } from "./notificationReducer";
+
+import deckService from "../../services/deck.service";
+
+import { CreateDeck, Deck } from "../../types";
 
 
 interface InitialState{
@@ -32,6 +34,9 @@ const deckReducer = createSlice({
         {
            return {...state, decks: state.decks.filter(deck => deck.id !== action.payload)}
         },
+        updateDeck(state, action: PayloadAction<Deck>){
+            return {...state, decks: state.decks.map(deck => deck.id === action.payload.id ? action.payload : deck)}
+        },
         setIsLoading(state, action: PayloadAction<boolean>)
         {
             state.isLoading = action.payload;
@@ -39,7 +44,7 @@ const deckReducer = createSlice({
     }
 })
 
-export const {setDecks, addDeck, deleteDeck, setIsLoading} = deckReducer.actions;
+export const {setDecks, addDeck, deleteDeck, updateDeck, setIsLoading} = deckReducer.actions;
 
 export function initializeDecks(userDecks: boolean, signal: AbortSignal)
 {
@@ -97,6 +102,30 @@ export function deleteUserDeckReduce(id: string)
             dispatch(createAndDeleteNotification({
                 type: 'success',
                 message: 'Deck has been deleted'
+            }))    
+            
+        } catch (error) {
+            console.log(error);
+            dispatch(createAndDeleteNotification({
+                type: 'error',
+                message: 'Internal error please try again later!'
+            }))
+        }
+    }
+}
+
+export function updateDeckLikes(deck: Deck)
+{
+   
+    return async function(dispatch: ThunkDispatch<unknown, unknown, AnyAction>)
+    {
+        try 
+        {
+            const updatedDeck: Deck = await deckService.updateDeckLikes(deck.id)
+            dispatch(updateDeck(updatedDeck))
+            dispatch(createAndDeleteNotification({
+                type: 'success',
+                message: deck.likes > updatedDeck.likes ? 'Deck Liked' : 'Like Removed' 
             }))    
             
         } catch (error) {

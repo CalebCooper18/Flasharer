@@ -1,11 +1,15 @@
+import { useState } from 'react';
+
 import { AiFillHome, AiOutlineLogin, AiOutlineLogout, AiOutlineUser, AiOutlineUserAdd, AiOutlineInfoCircle, AiOutlineEye, AiOutlineCloseCircle} from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md'
 import { GiHamburgerMenu } from 'react-icons/gi'
+
+import IconBtn from './IconBtn';
 import IconLink from './IconLink';
 import Divider from './Divider';
+
 import { User } from '../../types';
-import { useState } from 'react';
-import IconBtn from './IconBtn';
+
 
 interface Props{
   user: User | null;

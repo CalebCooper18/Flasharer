@@ -1,6 +1,11 @@
-import { Deck } from '../../types'
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+
+import { Deck } from '../../types';
+
 import DeleteDeckBtn from './DeleteDeckBtn';
+import LikeDeckBtn from './LikeDeckBtn';
 
 interface Props {
     deck: Deck;
@@ -9,17 +14,24 @@ interface Props {
 }
 
 export default function DeckDisplay({deck, isUserDecks}: Props) {
-    
+  
+    const [isClicked, setIsClicked] = useState(false);
+
   return (
-    <div className='deck-grid-item-template group'>
-        <p className='text-base line-clamp-2'>Topic: {deck.topic}</p>
-        <p className='text-xs line-clamp-2'>Number of cards: {deck.cards.length}</p>
-        <p className='text-xs'>Tags: {deck.tags.map((tag => <span>{tag} </span>))} </p>
-        <p className='text-xs truncate'>Likes: {deck.likes}</p>
-        <div className='absolute flex flex-col justify-center items-center scale-0 w-full h-full 
-        top-0 left-0 origin-center bg-purple-900 opacity-90 group-hover:scale-100 
-        transition-all duration-200 font-black '>
+    <div className='deck-grid-item-template' onClick={() => setIsClicked(!isClicked)}>
+        <p className='text-base md:text-xl max-h-12 min-h-[48px] overflow-y-scroll break-words'>Topic: {deck.topic}</p>
+        <p className='text-sm md:text-base my-1'>Number of cards: {deck.cards.length}</p>
+        <p className='text-sm md:text-base max-h-8 md:max-h-12 overflow-y-scroll'>Tags: 
+        {deck.tags.map((tag => <span key={tag} 
+        className='inline-block me-1 mb-1 border border-semiLightPurple rounded-md text-tiny p-0.5 break-words'>{tag}</span>))} 
+        </p>
+        <p className='text-sm md:text-base'>Likes: {deck.likes}</p>
+        {isUserDecks && <p className='text-sm md:text-base'>Shared: {deck.shared ? 'Yes' : 'No'}</p>}
+        <div className={`absolute flex flex-col justify-center items-center w-full h-full 
+        top-0 left-0 origin-center bg-purple-900 opacity-90 
+        transition-all duration-200 font-black ${isClicked ? 'scale-100' : 'scale-0'}`}>
             <Link to={`/viewDeck/${deck.id}`}><button className='hover:underline hover:text-black'>View</button></Link>
+            {!isUserDecks && <LikeDeckBtn deck={deck} />}
             {isUserDecks && <button className='hover:underline hover:text-black'>Edit</button>}
             {isUserDecks && <DeleteDeckBtn id={deck.id} />}
         </div>

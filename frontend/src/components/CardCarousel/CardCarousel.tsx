@@ -1,10 +1,10 @@
 import { useState } from "react"
+
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 
+import CardCarouselItem from "./CardCarouselItem"
 
 import { Card } from "../../types"
-
-import CardCarouselItem from "./CardCarouselItem"
 
 interface Props {
     cards: Card[]

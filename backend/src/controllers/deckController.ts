@@ -2,7 +2,7 @@ import { IUserDocument } from "../models/user";
 import { NextFunction, Request, Response } from "express";
 import { createNewDeck, deleteDeck, findDeck, getAllSharedDecks, getAllUserDecks } from "../service/deck.service";
 import Deck, { IDeckDocument } from "../models/deck";
-import { UpdateWriteOpResult} from "mongoose";
+// import { UpdateWriteOpResult} from "mongoose";
 import AppError from "../utils/appError";
 
 
@@ -82,16 +82,6 @@ async function deleteDeckHandler(req: Request, res: Response)
     return res.status(204).end();
 }
 
-
-async function updateShareDeckHandler(req: Request, res: Response)
-{
-  const deck : IDeckDocument = req.body.deck;
-  deck.shared = !deck.shared;
-  await deck.save();
-
-  return res.status(200).json(deck);
-}
-
 async function updateLikesDeckHandler(req: Request, res: Response)
 {
     const user : IUserDocument = req.body.user;
@@ -116,85 +106,122 @@ async function updateLikesDeckHandler(req: Request, res: Response)
         deckToUpdate.likes =  deckToUpdate.likes + 1;
     }
 
-    await deckToUpdate.save();
+    const deckUpdated =  await deckToUpdate.save();
 
-    return res.status(200).json(deckToUpdate);
+    return res.status(200).json(deckUpdated);
 }
 
-async function deleteCardHandler(req: Request, res: Response)
+async function updateDeckHandler(req: Request, res: Response, next: NextFunction) 
 {
-    const deck: IDeckDocument = req.body.deck;
-    const cardId = req.params.cardId;
-    const modifiedDeck: UpdateWriteOpResult = await Deck.updateOne({_id: deck._id}, {$pull: {cards: {_id: cardId } } } );
-
-    
-    if(modifiedDeck.modifiedCount === 0)
+    try
     {
-        return res.status(404).json({error: 'The card does not exist'});
+
+        const deckUpdate: IDeckDocument = req.body.updatedDeck;
+        const originalDeck: IDeckDocument = req.body.deck;
+        console.log(req.body);
+        const updatedDeck = await Deck.findByIdAndUpdate(originalDeck.id, deckUpdate, {
+            new: true
+        })
+        return res.status(200).json(updatedDeck);
     }
-    
-    return res.status(204).end();
+    catch (error: unknown)
+    {
+        return next(error);
+    } 
+
 }
 
-async function updateCardHandler(req: Request, res: Response)
-{
-    const deck: IDeckDocument = req.body.deck;
-    const cardId = req.params.cardId;
-    const {subject, answer}: {subject: unknown, answer: unknown} = req.body;
 
-    if(!answer || !subject || typeof subject !== 'string' || typeof answer !== 'string' )
-    {
-        return res.status(400).json({error: 'Missing fields'})
-    }
+// NO LONGER NEEDED DUE TO WANTING TO UPDATE THE ENTIRE DECK AS OPPOSED TO ONLY UPDATING BITS OF THE DECK
+// KEEPING FOR FUTURE REFERENCE  
 
-    const modifiedDeck: UpdateWriteOpResult | null = await Deck.findOneAndUpdate({
-        _id: deck._id,
-         "cards._id": cardId
-    },
-    {
-        $set: {
-            "cards.$.subject": subject,
-            "cards.$.answer": answer
-        }
-    }, 
-    { new: true })
+
+// async function updateShareDeckHandler(req: Request, res: Response)
+// {
+//   const deck : IDeckDocument = req.body.deck;
+//   deck.shared = !deck.shared;
+//   await deck.save();
+
+//   return res.status(200).json(deck);
+// }
+
+
+// async function deleteCardHandler(req: Request, res: Response)
+// {
+//     const deck: IDeckDocument = req.body.deck;
+//     const cardId = req.params.cardId;
+//     const modifiedDeck: UpdateWriteOpResult = await Deck.updateOne({_id: deck._id}, {$pull: {cards: {_id: cardId } } } );
+
     
-    if(!modifiedDeck)
-    {
-        return res.status(404).json({error: 'No card with matching ID'});
-    }
+//     if(modifiedDeck.modifiedCount === 0)
+//     {
+//         return res.status(404).json({error: 'The card does not exist'});
+//     }
     
-    return res.status(200).json(modifiedDeck);
-}
+//     return res.status(204).end();
+// }
 
-async function addCardHandler(req: Request, res: Response) 
-{
-    const deck: IDeckDocument = req.body.deck;
-    const {subject, answer}: {subject: unknown, answer: unknown} = req.body;
 
-    if(!subject || !answer || typeof subject !== 'string' || typeof answer !== 'string')
-    {
-        return res.status(400).json({error: 'Card missing fields or incorrect formatting'});
-    }
 
-    const modifiedDeck: UpdateWriteOpResult | null = await Deck.findOneAndUpdate({
-        _id: deck._id
-    },
-    {
-        $push:
-        {
-            cards: {subject, answer}
-        }
-    },
-    {new: true})
+// async function updateCardHandler(req: Request, res: Response)
+// {
+//     const deck: IDeckDocument = req.body.deck;
+//     const cardId = req.params.cardId;
+//     const {subject, answer}: {subject: unknown, answer: unknown} = req.body;
 
-    if(!modifiedDeck)
-    {
-        return res.status(500).json({error: 'Something went wrong'})
-    }
+//     if(!answer || !subject || typeof subject !== 'string' || typeof answer !== 'string' )
+//     {
+//         return res.status(400).json({error: 'Missing fields'})
+//     }
 
-    return res.status(200).json(modifiedDeck);
-}
+//     const modifiedDeck: UpdateWriteOpResult | null = await Deck.findOneAndUpdate({
+//         _id: deck._id,
+//          "cards._id": cardId
+//     },
+//     {
+//         $set: {
+//             "cards.$.subject": subject,
+//             "cards.$.answer": answer
+//         }
+//     }, 
+//     { new: true })
+    
+//     if(!modifiedDeck)
+//     {
+//         return res.status(404).json({error: 'No card with matching ID'});
+//     }
+    
+//     return res.status(200).json(modifiedDeck);
+// }
+
+// async function addCardHandler(req: Request, res: Response) 
+// {
+//     const deck: IDeckDocument = req.body.deck;
+//     const {subject, answer}: {subject: unknown, answer: unknown} = req.body;
+
+//     if(!subject || !answer || typeof subject !== 'string' || typeof answer !== 'string')
+//     {
+//         return res.status(400).json({error: 'Card missing fields or incorrect formatting'});
+//     }
+
+//     const modifiedDeck: UpdateWriteOpResult | null = await Deck.findOneAndUpdate({
+//         _id: deck._id
+//     },
+//     {
+//         $push:
+//         {
+//             cards: {subject, answer}
+//         }
+//     },
+//     {new: true})
+
+//     if(!modifiedDeck)
+//     {
+//         return res.status(500).json({error: 'Something went wrong'})
+//     }
+
+//     return res.status(200).json(modifiedDeck);
+// }
 
 
 export default{
@@ -203,9 +230,10 @@ export default{
     deleteDeckHandler,
     getAllUsersDecksHandler,
     getSingleDeckHandler,
-    updateShareDeckHandler,
     updateLikesDeckHandler,
-    deleteCardHandler,
-    updateCardHandler,
-    addCardHandler
+    updateDeckHandler
+    // updateShareDeckHandler,
+    // deleteCardHandler,
+    // updateCardHandler,
+    // addCardHandler
 }

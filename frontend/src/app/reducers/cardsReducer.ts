@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { CreateCard } from '../../types'
 
 type InitialState = CreateCard[];
