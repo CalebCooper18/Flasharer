@@ -2,9 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { CreateCard } from '../../types'
 
-type InitialState = CreateCard[];
+interface InitialState {
+     cards: CreateCard[]
+}
 
-const initialState: InitialState = []
+const initialState: InitialState = {
+     cards: []
+}
 
 
 const cardsReducer = createSlice({
@@ -14,19 +18,25 @@ const cardsReducer = createSlice({
     {
        addCard(state, action: PayloadAction<CreateCard>)
        {
-            state.push(action.payload)
+          state.cards.push(action.payload)
        },
        deleteCard(state, action: PayloadAction<string>)
        {
-            return state.filter(card => card.id !== action.payload);
+          return {
+               ...state,
+               cards: state.cards.filter(card => card.id !== action.payload)
+          }
        },
        updateCard(state, action: PayloadAction<CreateCard>)
        {
-            return state.map(card => card.id !== action.payload.id ? card : action.payload );
+            return {
+               ...state,
+               cards: state.cards.map(card => card.id !== action.payload.id ? card : action.payload )
+            }
        },
-       clearCards(_state)
+       clearCards(state)
        {
-          return []
+          state.cards = []
        },
     }
 })

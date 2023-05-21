@@ -8,10 +8,8 @@ import { createNewUserDeck } from "../app/reducers/deckReducer";
 import {addCard, clearCards} from "../app/reducers/cardsReducer";
 
 import TagsSelect from "../components/DeckForm/TagsSelect";
-import AddCardBtn from "../components/DeckForm/AddCardBtn";
-import UpdateCardBtn from "../components/DeckForm/UpdateCardBtn";
 import DeckShared from '../components/DeckForm/DeckShared';
-import CardList from '../components/DeckForm/CardList';
+import CardSectionContainer from '../components/DeckForm/CardSection/CardSectionContainer';
 
 import { CreateCard } from "../types";
 
@@ -25,7 +23,7 @@ export default function Create() {
     const [cardId, setCardId] = useState('');
 
     const dispatch = useAppDispatch();
-    const cards = useAppSelector(state => state.cards);
+    const { cards } = useAppSelector(state => state.cards);
 
     function handleAddCard()
     {
@@ -95,27 +93,8 @@ export default function Create() {
                     <label className="min-w-fit">Topic Name:</label>
                     <input type="text" className="input-field" value={topic} onChange={(e) => setTopic(e.target.value)} />
                 </div>
-                <h3 className="leading-4 mt-2 text-center">Add Cards:</h3>
-                <div className="w-full grid grid-cols-1 gap-y-2 justify-center items-center sm:gap-x-10 sm:gap-y-2 sm:grid-cols-2">
-                    <div className="w-full flex flex-col items-center gap-1 sm:gap-0">
-                        <label>Front:</label>
-                        <input type="text" className="input-field" value={subject} onChange={(e) => setSubject(e.target.value)} />
-                    </div>
-                    <div className="w-full flex flex-col items-center gap-1 sm:gap-0">
-                        <label>Back:</label>
-                        <input type="text" className="input-field" value={answer} onChange={(e) => setAnswer(e.target.value)} />
-                    </div>
-                    <div className="w-full">
-                        {!cardId && <AddCardBtn handleAddCard={handleAddCard} />}
-                        {cardId && <button className="form-card-button-template bg-red-500 hover:bg-red-900"
-                        onClick={() => setCardId('')}>
-                        Cancel Edit</button>}
-                    </div>
-                    <div className="w-full">
-                        <UpdateCardBtn id={cardId} subject={subject} answer={answer} clearCardsFields={clearCardFields} setCardId={setCardId}/>
-                    </div>
-                </div>
-                <CardList cards={cards} setCardId={setCardId} setSubject={setSubject} setAnswer={setAnswer} />
+                <CardSectionContainer setSubject={setSubject} setAnswer={setAnswer} setCardId={setCardId} subject={subject}
+                answer={answer} cardId={cardId} handleAddCard={handleAddCard} clearCardFields={clearAllFields} cards={cards}/>
                 <div className="w-full">
                     <h3 className="my-2 py-0.5 overflow-x-scroll whitespace-nowrap">Tags: 
                     {tags.map(tag => <span key={tag} className="me-1 border border-semiLightPurple rounded-md text-tiny p-0.5">{tag}</span>)}

@@ -1,6 +1,6 @@
 import CardListItem from "./CardListItem"
 
-import { Card, CreateCard } from "../../types"
+import { Card, CreateCard } from "../../../types"
 import React from "react"
 
 

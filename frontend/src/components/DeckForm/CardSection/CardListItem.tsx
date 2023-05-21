@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useAppDispatch } from "../../app/hooks";
-import { deleteCard } from "../../app/reducers/cardsReducer";
+import { useAppDispatch } from "../../../app/hooks";
+import { deleteCard } from "../../../app/reducers/cardsReducer";
 
 interface Props 
 {
