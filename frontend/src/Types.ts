@@ -17,7 +17,8 @@ export interface User {
 }
 
 export interface CreateCard {
-    id?: string;
+    tempId?: string;
+    id?: string
     subject: string;
     answer: string;
 }

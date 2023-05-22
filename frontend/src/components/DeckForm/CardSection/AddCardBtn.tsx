@@ -1,4 +1,3 @@
-
 interface Props {
     handleAddCard: () => void;
 }

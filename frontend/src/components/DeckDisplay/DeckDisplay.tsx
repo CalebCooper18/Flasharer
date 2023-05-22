@@ -32,7 +32,7 @@ export default function DeckDisplay({deck, isUserDecks}: Props) {
         transition-all duration-200 font-black ${isClicked ? 'scale-100' : 'scale-0'}`}>
             <Link to={`/viewDeck/${deck.id}`}><button className='hover:underline hover:text-black'>View</button></Link>
             {!isUserDecks && <LikeDeckBtn deck={deck} />}
-            {isUserDecks && <button className='hover:underline hover:text-black'>Edit</button>}
+            {isUserDecks && <Link to={`/editDeck/${deck.id}`}> <button className='hover:underline hover:text-black'>Edit</button> </Link>}
             {isUserDecks && <DeleteDeckBtn id={deck.id} />}
         </div>
     </div>

@@ -118,7 +118,6 @@ async function updateDeckHandler(req: Request, res: Response, next: NextFunction
 
         const deckUpdate: IDeckDocument = req.body.updatedDeck;
         const originalDeck: IDeckDocument = req.body.deck;
-        console.log(req.body);
         const updatedDeck = await Deck.findByIdAndUpdate(originalDeck.id, deckUpdate, {
             new: true
         })

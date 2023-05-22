@@ -1,15 +1,18 @@
 import React from "react";
 
+import { useAppSelector } from "../../../app/hooks";
+
 import CardInputs from "./CardInputs";
 import AddCardBtn from "./AddCardBtn";
 import CancelEditBtn from "./CancelEditBtn";
 import UpdateCardBtn from "./UpdateCardBtn";
 import CardList from "./CardList";
 
+
 import { CreateCard } from "../../../types";
 
-interface Props 
-{
+
+interface Props {
   setSubject: React.Dispatch<React.SetStateAction<string>>;
   setAnswer: React.Dispatch<React.SetStateAction<string>>;
   setCardId: React.Dispatch<React.SetStateAction<string>>;
@@ -18,10 +21,12 @@ interface Props
   subject: string;
   answer: string;
   cardId: string;
-  cards: CreateCard[]
 }
 
-export default function CardSectionContainer({setSubject, setAnswer, setCardId, subject, answer, cardId, handleAddCard, clearCardFields, cards}: Props) {
+export default function CardSectionContainer({setSubject, setAnswer, setCardId, subject, answer, cardId, handleAddCard, clearCardFields}: Props) {
+  
+  const { cards } = useAppSelector(state => state.cards);
+
   return (
     <>
      <h3 className="leading-4 mt-2 text-center">Add Cards:</h3>
@@ -31,7 +36,7 @@ export default function CardSectionContainer({setSubject, setAnswer, setCardId, 
             {!cardId && <AddCardBtn handleAddCard={handleAddCard} />}
             {cardId && <CancelEditBtn setCardId={setCardId} />}
         </div>
-        <UpdateCardBtn id={cardId} subject={subject} answer={answer} clearCardsFields={clearCardFields} setCardId={setCardId}/>
+        <UpdateCardBtn tempId={cardId} subject={subject} answer={answer} clearCardsFields={clearCardFields} setCardId={setCardId}/>
     </div>
     <CardList cards={cards} setCardId={setCardId} setSubject={setSubject} setAnswer={setAnswer} />
     </>

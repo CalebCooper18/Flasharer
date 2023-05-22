@@ -138,4 +138,27 @@ export function updateDeckLikes(deck: Deck)
     }
 }
 
+export function updateUserDeck(deck: Deck)
+{
+    return async function(dispatch: ThunkDispatch<unknown, unknown, AnyAction>)
+    {
+        try 
+        {
+            const updatedDeck: Deck = await deckService.updateUserDeck(deck)
+            dispatch(updateDeck(updatedDeck))
+            dispatch(createAndDeleteNotification({
+                type: 'success',
+                message: 'Deck successfully updated'
+            }))    
+            
+        } catch (error) {
+            console.log(error);
+            dispatch(createAndDeleteNotification({
+                type: 'error',
+                message: 'Internal error please try again later!'
+            }))
+        }
+    }
+}
+
 export default deckReducer.reducer;

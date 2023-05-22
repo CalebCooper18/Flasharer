@@ -1,5 +1,3 @@
-
-
 export default function LoadingDots() {
   return (
     <div className="flex flex-col gap-2 w-full h-3/4 justify-center items-center">

@@ -17,7 +17,7 @@ export default function CardList({ cards, setCardId, setSubject, setAnswer }: Pr
         <h3 className="mb-2">All Cards:</h3>
         <ul className="bg-white w-full h-24 rounded-md overflow-y-scroll text-black sm:h-32">
             {cards.map(card => (
-            <CardListItem key={card.id} subject={card.subject} answer={card.answer} id={card.id as string} 
+            <CardListItem key={card.tempId} subject={card.subject} answer={card.answer} tempId={card.tempId as string} 
             setCardId={setCardId} setSubject={setSubject} setAnswer={setAnswer}/>
             ))}
         </ul>

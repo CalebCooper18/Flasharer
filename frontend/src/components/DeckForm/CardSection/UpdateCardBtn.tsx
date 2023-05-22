@@ -3,14 +3,14 @@ import { updateCard } from "../../../app/reducers/cardsReducer";
 import { createAndDeleteNotification } from "../../../app/reducers/notificationReducer";
 
 interface Props {
-    id: string,
+    tempId: string,
     subject: string,
     answer: string,
     clearCardsFields: () => void;
     setCardId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function UpdateCardBtn({id, subject, answer, clearCardsFields, setCardId}: Props) {
+export default function UpdateCardBtn({tempId, subject, answer, clearCardsFields, setCardId}: Props) {
   const dispatch = useAppDispatch();
 
   function handleClick()
@@ -24,7 +24,7 @@ export default function UpdateCardBtn({id, subject, answer, clearCardsFields, se
     }
 
       dispatch(updateCard({
-        id,
+        tempId,
         subject,
         answer
       }));
@@ -38,7 +38,7 @@ export default function UpdateCardBtn({id, subject, answer, clearCardsFields, se
 
   return (
     <div className="w-full">
-      <button type="button" disabled={!!!id} className={`form-card-button-template bg-semiLightPurple ${!id ? 
+      <button type="button" disabled={!!!tempId} className={`form-card-button-template bg-semiLightPurple ${!tempId ? 
       'disabled:cursor-not-allowed disabled:opacity-20': 
       'hover:bg-purple-800 active:bg-purple-900 group'}`} onClick={handleClick}>
           <span className="group-active:opacity-0 transition-all duration-200">Edit Card</span>

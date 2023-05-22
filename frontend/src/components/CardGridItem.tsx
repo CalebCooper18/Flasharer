@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-interface Props
-{
+interface Props {
     front: string;
     back: string;
 }

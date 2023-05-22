@@ -11,7 +11,7 @@ import Divider from './Divider';
 import { User } from '../../types';
 
 
-interface Props{
+interface Props {
   user: User | null;
 }
 

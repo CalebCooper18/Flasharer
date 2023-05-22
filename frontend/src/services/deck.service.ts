@@ -2,7 +2,7 @@ import { baseURl } from "../utils/constants";
 
 import userService from "./user.service";
 
-import { CreateDeck } from "../types";
+import { CreateDeck, Deck } from "../types";
 
 
 function config()
@@ -102,6 +102,24 @@ async function updateDeckLikes(id: string)
     return data;
 }
 
+async function updateUserDeck(updatedDeck: Deck)
+{
+    const updatedDeckObj = {updatedDeck}
+    const res = await fetch(`${baseURl}/deck/${updatedDeck.id}`, {
+        method: 'PUT',
+        headers: config(),
+        body: JSON.stringify(updatedDeckObj)
+    })
+
+    const data = await res.json();
+    if(res.status !== 200)
+    {
+        throw new Error(data.error);
+    }
+
+    return data;
+}
+
 
 
 export default {
@@ -110,5 +128,6 @@ export default {
     getSingleDeck,
     createUserDeck,
     deleteUserDeck,
-    updateDeckLikes
+    updateDeckLikes,
+    updateUserDeck
 }

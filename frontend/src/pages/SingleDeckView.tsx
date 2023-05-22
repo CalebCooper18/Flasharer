@@ -1,61 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-
-import { useAppDispatch } from '../app/hooks';
-import { createAndDeleteNotification } from '../app/reducers/notificationReducer';
 
 import LoadingDots from '../components/LoadingDots';
 import CardGridItem from '../components/CardGridItem'
 import GridViewBtn from '../components/GridViewBtn';
 import CardCarousel from '../components/CardCarousel/CardCarousel';
 
-import { Deck } from '../types';
-
-import deckService from '../services/deck.service'
+import { useFetchDeck } from '../hooks/useFetchDeck';
 
 export default function SingleDeckView() {
-
-    const dispatch = useAppDispatch();
-    const [deck, setDeck] = useState<Deck>({} as Deck);
     const [gridView, setGridView] = useState(true);
-    const [loading, setLoading] = useState(true)
-    let { id } = useParams();
-
-    useEffect(() => {
-        let isCancelled = false;
-       
-        async function getDeck()
-        {
-            try 
-            {
-                if(id !== undefined)
-                {
-                    if(!isCancelled)
-                    {
-                        let result: Deck = await deckService.getSingleDeck(id);
-                        setDeck(result);
-                        setLoading(false);
-                    }
-                }    
-            } catch (error) 
-            {
-                if(!isCancelled)
-                {
-                    if(error instanceof Error)
-                    {
-                        dispatch(createAndDeleteNotification({type: 'error', message: error.message}))
-                    }
-                }
-            }
-        }
-
-        getDeck();
-
-        return () => {
-            isCancelled = true;
-        }
-
-    }, [])
+    const { id } = useParams();
+    const {deck, loading} = useFetchDeck(id as string)
+    
 
     if(loading)
     {
@@ -64,17 +21,17 @@ export default function SingleDeckView() {
         )
     }
 
-    console.log(deck.cards.map(deck => deck.id));
+   
   return (
     <section>
-        <h2 className='text-center text-2xl text-white capitalize py-6 underline max-w-full break-words'>{deck.topic}</h2>
+        <h2 className='text-center text-2xl text-white capitalize py-6 underline max-w-full break-words'>{deck?.topic}</h2>
         <GridViewBtn gridView={gridView} setGridView={setGridView} /> 
         {gridView && 
         <div className='mx-8 mt-5 grid grid-cols-1 xss:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5'>
-            {deck.cards.map((card => <CardGridItem key={card.id} front={card.subject} back={card.answer} /> ))}
+            {deck?.cards.map((card => <CardGridItem key={card.id} front={card.subject} back={card.answer} /> ))}
         </div>
         }
-        {!gridView && <CardCarousel cards={deck.cards} />}
+        {!gridView && <CardCarousel cards={deck?.cards} />}
     </section>    
   )
 }

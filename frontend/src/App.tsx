@@ -14,6 +14,7 @@ import AllDecksView from './pages/AllDecksView';
 import SingleDeckView from './pages/SingleDeckView';
 
 import userService from './services/user.service';
+import EditDeck from './pages/EditDeck';
 
 
 
@@ -42,6 +43,7 @@ function App() {
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
           <Route path='/create' element={user ? <Create /> : <Navigate to = '/' /> } />
+          <Route path='/editDeck/:id' element={user ? <EditDeck /> : <Navigate to = '/' /> } />
           <Route path='/sharedDecks' element={user ? <AllDecksView /> : <Navigate to = '/' />} /> 
           <Route path='/viewDeck/:id' element={user ? <SingleDeckView /> : <Navigate to = '/' />} />
         </Routes>

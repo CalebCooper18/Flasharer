@@ -1,12 +1,16 @@
+import {v4 as uuid} from 'uuid';
+
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { CreateCard } from '../../types'
+import { CreateCard, Card } from '../../types'
 
-interface InitialState {
-     cards: CreateCard[]
+interface InitialState 
+{
+     cards: (CreateCard | Card)[]
 }
 
-const initialState: InitialState = {
+const initialState: InitialState = 
+{
      cards: []
 }
 
@@ -16,6 +20,17 @@ const cardsReducer = createSlice({
     initialState,
     reducers: 
     {
+      initializeCards(state, action: PayloadAction<CreateCard[]>)
+      {
+         action.payload.forEach(card => {
+            card.tempId = uuid();
+            
+         });
+         return {
+            ...state,
+            cards: action.payload
+         }
+      },
        addCard(state, action: PayloadAction<CreateCard>)
        {
           state.cards.push(action.payload)
@@ -24,14 +39,14 @@ const cardsReducer = createSlice({
        {
           return {
                ...state,
-               cards: state.cards.filter(card => card.id !== action.payload)
+               cards: state.cards.filter(card => card.tempId !== action.payload)
           }
        },
        updateCard(state, action: PayloadAction<CreateCard>)
        {
             return {
                ...state,
-               cards: state.cards.map(card => card.id !== action.payload.id ? card : action.payload )
+               cards: state.cards.map(card => card.tempId !== action.payload.tempId ? card : action.payload )
             }
        },
        clearCards(state)
@@ -42,7 +57,7 @@ const cardsReducer = createSlice({
 })
 
 
-export const {addCard, deleteCard, updateCard, clearCards} = cardsReducer.actions;
+export const {initializeCards, addCard, deleteCard, updateCard, clearCards} = cardsReducer.actions;
 
 
 export default cardsReducer.reducer;
