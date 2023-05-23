@@ -40,7 +40,7 @@ function App() {
       <div className='content-container xss:ms-[76px]'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
+          <Route path='/login' element={!user ? <Login /> : <Navigate to='/me' />} />
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
           <Route path='/create' element={user ? <Create /> : <Navigate to = '/' /> } />

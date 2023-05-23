@@ -59,6 +59,12 @@ body
         @apply bg-darkBackground h-screen ms-12
     }
 
+    .homepage-button-template {
+        @apply p-3 w-full h-full shadow-lg relative overflow-y-hidden
+        rounded-md active:scale-95 transition-all duration-300 text-2xl
+        bg-semiLightPurple hover:bg-purple-700 text-white
+    }
+
     .input-field
     {
         @apply shadow appearance-none bg-textboxDark
