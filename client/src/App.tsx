@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { login } from './app/reducers/userReducer';
 
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Navbar from './components/Navbar/Navbar';
 import Register from './pages/Register';
@@ -38,7 +39,7 @@ function App() {
       {notification && <Notification message={notification.message} type={notification.type} /> }
       <div className='content-container xss:ms-[76px]'>
         <Routes>
-          <Route path='/'/>
+          <Route path='/' element={<Home />} />
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />

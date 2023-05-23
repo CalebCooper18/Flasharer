@@ -14,7 +14,7 @@ export default function SingleDeckView() {
     const {deck, loading} = useFetchDeck(id as string)
     
 
-    if(loading)
+    if(loading || !deck)
     {
         return (
             <LoadingDots />
@@ -24,14 +24,14 @@ export default function SingleDeckView() {
    
   return (
     <section>
-        <h2 className='text-center text-2xl text-white capitalize py-6 underline max-w-full break-words'>{deck?.topic}</h2>
+        <h2 className='text-center text-2xl text-white capitalize py-6 underline max-w-full break-words'>{deck.topic}</h2>
         <GridViewBtn gridView={gridView} setGridView={setGridView} /> 
         {gridView && 
         <div className='mx-8 mt-5 grid grid-cols-1 xss:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5'>
-            {deck?.cards.map((card => <CardGridItem key={card.id} front={card.subject} back={card.answer} /> ))}
+            {deck.cards.map((card => <CardGridItem key={card.id} front={card.subject} back={card.answer} /> ))}
         </div>
         }
-        {!gridView && <CardCarousel cards={deck?.cards} />}
+        {!gridView && <CardCarousel cards={deck.cards} />}
     </section>    
   )
 }

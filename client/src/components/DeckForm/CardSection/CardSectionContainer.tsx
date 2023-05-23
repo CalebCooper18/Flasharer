@@ -8,10 +8,6 @@ import CancelEditBtn from "./CancelEditBtn";
 import UpdateCardBtn from "./UpdateCardBtn";
 import CardList from "./CardList";
 
-
-import { CreateCard } from "../../../types";
-
-
 interface Props {
   setSubject: React.Dispatch<React.SetStateAction<string>>;
   setAnswer: React.Dispatch<React.SetStateAction<string>>;
