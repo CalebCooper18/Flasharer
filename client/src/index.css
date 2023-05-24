@@ -60,8 +60,9 @@ body
     }
 
     .homepage-button-template {
-        @apply p-2 w-full h-full shadow-lg relative overflow-y-hidden
+        @apply p-2 w-full h-full shadow-lg relative overflow-x-hidden
         rounded-md active:scale-95 transition-all duration-300 text-2xl
+        text-center
         bg-transparent border-4 border-semiLightPurple hover:-translate-y-2 
         text-semiLightPurple  hover:border-purple-950 hover:shadow-lg hover:shadow-purple-950
     }

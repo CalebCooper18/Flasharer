@@ -18,8 +18,8 @@ export default function HomePageBtnsContainer({user}: Props) {
         className='h-full w-full'
         >
         { user ? 
-        <HomePageBtn text={'Create Deck'} linkTo={'/create'} />  : 
-        <HomePageBtn text={'Create Account'} linkTo={'/register'} /> }
+        <HomePageBtn text={'Create Deck'} linkTo={'/create'} direction={'left'} />  : 
+        <HomePageBtn text={'Create Account'} linkTo={'/register'} direction={'left'} /> }
         </motion.div>
         <motion.div
         initial={{x: 20, opacity: 0}}
@@ -28,8 +28,8 @@ export default function HomePageBtnsContainer({user}: Props) {
         className='h-full w-full'
         >  
         {user ? 
-        <HomePageBtn text={'View Decks'} linkTo={'/sharedDecks'} /> :
-        <HomePageBtn text={'Login'} linkTo={'/login'} />
+        <HomePageBtn text={'View Decks'} linkTo={'/sharedDecks'} direction={'right'} /> :
+        <HomePageBtn text={'Login'} linkTo={'/login'} direction={'right'} />
         }
         </motion.div>
     </div>
