@@ -39,7 +39,7 @@ function App() {
       {notification && <Notification message={notification.message} type={notification.type} /> }
       <div className='content-container xss:ms-[76px]'>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home user={user} />} />
           <Route path='/login' element={!user ? <Login /> : <Navigate to='/me' />} />
           <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
           <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
