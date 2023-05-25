@@ -1,8 +1,8 @@
 import { useEffect, useState} from "react";
 
-import { createAndDeleteNotification } from "../app/reducers/notificationReducer";
 import { useAppDispatch } from "../app/hooks";
 
+import { createAndDeleteNotification } from "../app/reducers/notificationReducer";
 
 import deckService from "../services/deck.service";
 

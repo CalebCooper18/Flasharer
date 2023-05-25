@@ -62,7 +62,7 @@ body
     .homepage-button-template {
         @apply px-2 w-full h-full shadow-lg relative overflow-x-hidden
         rounded-md active:scale-95 transition-all duration-300 text-base
-        text-center text-white bg-purple-500 hover:-translate-y-2 
+        text-center text-white bg-transparent border border-purple-500 hover:-translate-y-2 
       hover:border-purple-950 hover:shadow-2xl hover:shadow-purple-950
       hover:bg-purple-800
     }

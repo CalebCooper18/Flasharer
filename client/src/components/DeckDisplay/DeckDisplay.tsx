@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
-import { Deck } from '../../types';
+import { useAppSelector } from '../../app/hooks';
 
 import DeleteDeckBtn from './DeleteDeckBtn';
 import LikeDeckBtn from './LikeDeckBtn';
 
+import { Deck, User } from '../../types';
 interface Props {
     deck: Deck;
     isUserDecks: boolean
@@ -15,6 +15,7 @@ interface Props {
 
 export default function DeckDisplay({deck, isUserDecks}: Props) {
   
+    const { user } = useAppSelector(state => state.user)
     const [isClicked, setIsClicked] = useState(false);
 
   return (
@@ -25,7 +26,11 @@ export default function DeckDisplay({deck, isUserDecks}: Props) {
         {deck.tags.map((tag => <span key={tag} 
         className='inline-block me-1 mb-1 border border-semiLightPurple rounded-md text-tiny p-0.5 break-words'>{tag}</span>))} 
         </p>
-        <p className='text-sm md:text-base'>Likes: {deck.likes}</p>
+        <p className='text-sm md:text-base'>Likes: {deck.likes}
+        {deck.likedBy.includes(user?.id as string) && !isUserDecks ? 
+        <small className='text-tiny'> You've liked this</small> 
+        : null}
+        </p>
         {isUserDecks && <p className='text-sm md:text-base'>Shared: {deck.shared ? 'Yes' : 'No'}</p>}
         <div className={`absolute flex flex-col justify-center items-center w-full h-full 
         top-0 left-0 origin-center bg-purple-900 opacity-90 

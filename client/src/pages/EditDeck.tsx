@@ -1,6 +1,7 @@
 
 import { SyntheticEvent, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useFetchDeck } from '../hooks/useFetchDeck';
@@ -24,6 +25,7 @@ export default function EditDeck() {
     cardId, setCardId, removeCardIds,clearCardFields, handleAddCard} = useCardForm();
   const dispatch = useAppDispatch();
   const { cards } = useAppSelector(state => state.cards)
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -47,6 +49,7 @@ export default function EditDeck() {
         shared,
         cards: removeCardIds(cards) as Card[],
       }))
+      navigate('/me')
     }
   }
 
@@ -56,21 +59,25 @@ export default function EditDeck() {
   }
 
   return (
-    <div className="h-[900px] min-w-[200px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
-    <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-5">
+    <motion.section
+    initial={{width: 0, opacity: 0}}
+    animate={{width: '100%', opacity: 1}}
+    exit={{width: 0, opacity: 0}}
+    className="h-[900px] min-w-[200px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
+      <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-5">
         <form className="w-full h-full flex flex-col items-center justify-around gap-1 sm:gap-3" onSubmit={(e) => handleSubmit(e)}>
-            <h3 className="leading-4 mb-5 text-center">Edit Your Deck:</h3>
-            <TopicInput setTopic={setTopic} topic={topic} />
-            <CardSectionContainer setSubject={setSubject} setAnswer={setAnswer} setCardId={setCardId} subject={subject}
-            answer={answer} cardId={cardId} handleAddCard={handleAddCard} clearCardFields={clearCardFields} />
-            <TagsSection setTags={setTags} tags={tags} />
-            <DeckShared setShared={setShared} shared={shared} />
-            <button className="w-full text-center justify-self-end bg-semiLightPurple rounded-lg p-1 hover:bg-purple-800 transition-all duration-500
-            active:scale-95 active:opacity-80">
-                Edit Deck
-            </button>
+          <h3 className="leading-4 mb-5 text-center">Edit Your Deck:</h3>
+          <TopicInput setTopic={setTopic} topic={topic} />
+          <CardSectionContainer setSubject={setSubject} setAnswer={setAnswer} setCardId={setCardId} subject={subject}
+          answer={answer} cardId={cardId} handleAddCard={handleAddCard} clearCardFields={clearCardFields} />
+          <TagsSection setTags={setTags} tags={tags} />
+          <DeckShared setShared={setShared} shared={shared} />
+          <button className="w-full text-center justify-self-end bg-semiLightPurple rounded-lg p-1 hover:bg-purple-800 transition-all duration-500
+          active:scale-95 active:opacity-80">
+              Edit Deck
+          </button>
         </form>
-    </div>  
-  </div>
+      </div>  
+  </motion.section>
   )
 }

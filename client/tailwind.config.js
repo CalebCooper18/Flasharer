@@ -25,11 +25,6 @@ export default {
       },
       keyframes : 
       {
-        fadeIn: 
-        {
-          '0%': { transform: 'translateY(30px)', opacity: '0%'},
-          '100%': { transform: 'translateY(0px)', opacity: '100%'}
-        },
         altBounce: 
         {
           '0%': {transform: 'translateY(0%)'},
@@ -38,7 +33,6 @@ export default {
         },
       },
       animation : {
-        'fading-in': 'fadeIn 1s ease-in-out forwards',
         'alt-bounce': 'altBounce 1s infinite',
       },
     },

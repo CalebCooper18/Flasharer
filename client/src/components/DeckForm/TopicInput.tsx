@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function TopicInput({topic, setTopic}: Props) {
-    console.log('rendering')
   return (
     <div className="w-full flex gap-2 items-center flex-col sm:flex-row">
         <label className="min-w-fit">Topic Name:</label>

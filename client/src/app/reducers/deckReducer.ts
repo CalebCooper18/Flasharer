@@ -56,7 +56,6 @@ export function initializeDecks(userDecks: boolean, signal: AbortSignal)
             
             if(!signal.aborted)
             {
-                console.log(signal.aborted)
                 dispatch(setDecks(allDecks))
                 dispatch(setIsLoading(false))
             }
@@ -105,7 +104,6 @@ export function deleteUserDeckReduce(id: string)
             }))    
             
         } catch (error) {
-            console.log(error);
             dispatch(createAndDeleteNotification({
                 type: 'error',
                 message: 'Internal error please try again later!'
@@ -125,11 +123,10 @@ export function updateDeckLikes(deck: Deck)
             dispatch(updateDeck(updatedDeck))
             dispatch(createAndDeleteNotification({
                 type: 'success',
-                message: deck.likes > updatedDeck.likes ? 'Deck Liked' : 'Like Removed' 
+                message: deck.likes < updatedDeck.likes ? 'Deck Liked' : 'Like Removed' 
             }))    
             
         } catch (error) {
-            console.log(error);
             dispatch(createAndDeleteNotification({
                 type: 'error',
                 message: 'Internal error please try again later!'
@@ -152,7 +149,6 @@ export function updateUserDeck(deck: Deck)
             }))    
             
         } catch (error) {
-            console.log(error);
             dispatch(createAndDeleteNotification({
                 type: 'error',
                 message: 'Internal error please try again later!'

@@ -1,7 +1,9 @@
 import { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion';
 
 import { useAppDispatch } from '../app/hooks';
+
 import { loginUser } from '../app/reducers/userReducer';
 
 export default function Login() {
@@ -21,7 +23,11 @@ export default function Login() {
 
 
   return (
-    <section className='flex items-center flex-col h-screen xss:justify-center'>
+    <motion.section 
+    initial={{width: 0, opacity: 0}}
+    animate={{width: '100%', opacity: 1}}
+    exit={{width: 0, opacity: 0}}
+    className='flex items-center flex-col h-screen xss:justify-center'>
       <form className='bg-primary text-white flex justify-center items-center flex-col rounded-lg shadow-md
       w-11/12 h-96 mt-5 xss:w-3/4' onSubmit={handleSubmit}>
       <h1 className='text-base tracking-wider mb-7 text-center xss:text-2xl'>Login To Your Account:</h1>
@@ -44,6 +50,6 @@ export default function Login() {
           Sign up here!</Link>
         </div>
       </form>
-    </section>
+    </motion.section>
   )
 }

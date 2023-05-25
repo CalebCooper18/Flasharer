@@ -1,6 +1,6 @@
-
-
 import { SyntheticEvent, useEffect} from "react"
+import { motion } from "framer-motion";
+
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useCardForm } from '../hooks/useCardForm';
 
@@ -46,7 +46,11 @@ export default function Create() {
     }, [])
 
   return (
-    <div className="h-[900px] min-w-[200px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
+    <motion.section 
+    initial={{width: 0, opacity: 0}}
+    animate={{width: '100%', opacity: 1}}
+    exit={{width: 0, opacity: 0}}
+    className="h-[900px] min-w-[200px] pt-10 w-full flex flex-col justify-center items-center text-white sm:h-[750px] xss:pt-20">
         <div className="bg-primary h-full w-5/6 rounded-lg py-4 px-5">
             <form className="w-full h-full flex flex-col items-center justify-around gap-1 sm:gap-3" onSubmit={(e) => handleSubmit(e)}>
                 <h3 className="leading-4 mb-5 text-center">Create a new Deck:</h3>
@@ -61,6 +65,6 @@ export default function Create() {
                 </button>
             </form>
         </div>  
-    </div>
+    </motion.section>
   )
 }

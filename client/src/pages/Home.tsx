@@ -53,7 +53,11 @@ export default function Home({user}: Props) {
     }, [])
   
   return (
-    <div className='pt-4 md:pt-20'>
+    <motion.section
+    initial={{width: 0, opacity: 0}}
+    animate={{width: '100%', opacity: 1}}
+    exit={{width: 0, opacity: 0}}
+    className='pt-4 md:pt-20'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-2 max-h-52'>
             <div className='flex justify-center items-center overflow-hidden'>
                 <div
@@ -86,7 +90,7 @@ export default function Home({user}: Props) {
             </div>
             <Lottie className='min-h-[300px] max-h-[400px] md:max-h-fit' animationData={animationData} />
         </div>
-    </div>
+    </motion.section>
 
   )
 }

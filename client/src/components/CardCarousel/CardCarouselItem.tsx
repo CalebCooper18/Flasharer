@@ -14,7 +14,7 @@ export default function CardCarouselItem({currentCard, showAnswer, setShowAnswer
             onClick={() => setShowAnswer(true)}>
                 <p>{currentCard.subject}</p>
            </div>
-           <div className={`card-grid-item-template bg-purple-600 after:content-['Click_to_see_Question']
+           <div className={`card-grid-item-template text-white bg-purple-600 after:content-['Click_to_see_Question']
             ${showAnswer ? 'rotate-X-0 hover:after:opacity-100 hover:after:animate-bounce' : 'rotate-X-90'}`}
             onClick={() => setShowAnswer(false)}>
                 {showAnswer && <p>{currentCard.answer}</p>}

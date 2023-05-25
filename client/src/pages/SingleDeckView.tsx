@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { motion } from 'framer-motion';
+
+import { useFetchDeck } from '../hooks/useFetchDeck';
 
 import LoadingDots from '../components/LoadingDots';
 import CardGridItem from '../components/CardGridItem'
 import GridViewBtn from '../components/GridViewBtn';
 import CardCarousel from '../components/CardCarousel/CardCarousel';
 
-import { useFetchDeck } from '../hooks/useFetchDeck';
 
 export default function SingleDeckView() {
     const [gridView, setGridView] = useState(true);
@@ -23,7 +25,11 @@ export default function SingleDeckView() {
 
    
   return (
-    <section>
+    <motion.section
+    initial={{width: 0}}
+    animate={{width: '100%'}}
+    exit={{width: 0}}
+    >
         <h2 className='text-center text-2xl text-white capitalize py-6 underline max-w-full break-words'>{deck.topic}</h2>
         <GridViewBtn gridView={gridView} setGridView={setGridView} /> 
         {gridView && 
@@ -32,6 +38,6 @@ export default function SingleDeckView() {
         </div>
         }
         {!gridView && <CardCarousel cards={deck.cards} />}
-    </section>    
+    </motion.section>    
   )
 }

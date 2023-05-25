@@ -5,6 +5,7 @@ import HomePageBtn from "./HomePageBtn";
 
 import { User } from "../types";
 
+
 interface Props {
     user : User | null;
 }
