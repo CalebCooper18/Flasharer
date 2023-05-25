@@ -1,9 +1,11 @@
-import Lottie from 'lottie-react';
-import animationData from '../assets/boyStudyingFinal.json'
-import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { User } from '../types';
+import Lottie from 'lottie-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import animationData from '../assets/boyStudyingFinal.json'
 import HomePageBtnsContainer from '../components/HomePageBtnContainer';
+
+import { User } from '../types';
 
 interface Props {
     user: User | null
@@ -15,13 +17,22 @@ export default function Home({user}: Props) {
     const [count, setCount] = useState(0);
     const [animationFinished, setAnimationFinished] = useState(false);
     
-    const websiteTitles =  [
+    const websiteTitles = user ? 
+    [ 
+        
+            {subText: 'Welcome Back', highlightedText: `${user.username}`},
+            {subText: 'Let\'s get back in the action', highlightedText: ''}
+        
+    ]
+    :
+    [
         {subText: 'Welcome to', highlightedText: 'Flasharer'},
         {subText: 'Studying for an exam?', highlightedText: 'With us you create flash cards anytime'},
         {subText: 'Looking for notes?', highlightedText: 'We\'ve got your back!'},
         {subText: 'Share your notes', highlightedText: 'With the entire World!'},
         {subText: 'Get Started', highlightedText: ''}
-    ];
+    ]
+    
 
     useEffect(() => {
         let intervalId = setInterval(() => {

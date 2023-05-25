@@ -1,7 +1,9 @@
 
 import { motion } from "framer-motion";
-import { User } from "../types";
+
 import HomePageBtn from "./HomePageBtn";
+
+import { User } from "../types";
 
 interface Props {
     user : User | null;
@@ -10,7 +12,7 @@ interface Props {
 export default function HomePageBtnsContainer({user}: Props) {
 
     return (
-    <div className='mt-4 flex flex-col text-2xl md:flex-row justify-center items-center gap-3'>
+    <div className='mt-4 flex flex-col md:flex-row justify-center items-center gap-3'>
         <motion.div
         initial={{x: -20, opacity: 0}}
         animate={{x: 0, opacity: 1}}
