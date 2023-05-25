@@ -28,8 +28,8 @@ export default function DeckDisplay({deck, isUserDecks}: Props) {
         </p>
         <p className='text-sm md:text-base'>Likes: {deck.likes}
         {deck.likedBy.includes(user?.id as string) && !isUserDecks ? 
-        <small className='text-tiny'> You've liked this</small> 
-        : null}
+          <small className='text-tiny'> You've liked this</small> 
+          : null}
         </p>
         {isUserDecks && <p className='text-sm md:text-base'>Shared: {deck.shared ? 'Yes' : 'No'}</p>}
         <div className={`absolute flex flex-col justify-center items-center w-full h-full 

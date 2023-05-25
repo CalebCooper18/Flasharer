@@ -32,7 +32,7 @@ export default function Register() {
             className='flex items-center flex-col h-screen xss:justify-center'>
                 <form className='bg-primary text-white flex justify-center items-center flex-col rounded-lg shadow-md
                 w-11/12 h-[600px] mt-5 xss:w-3/4' onSubmit={handleSubmit}>
-                    <h1 className='text-base tracking-wider mb-7 text-center xss:text-2xl'>Create An Account:</h1>
+                    <h2 className='text-base tracking-wider mb-7 text-center xss:text-2xl'>Create An Account:</h2>
                     <div className='w-4/5 mb-6 xss:w-3/4'>
                         <input className='input-field' type='text' placeholder='Name'
                         onChange={(e) => setName(e.target.value)} value={name} />

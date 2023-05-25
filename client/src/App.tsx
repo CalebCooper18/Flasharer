@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { login } from './app/reducers/userReducer';
 
 import Home from './pages/Home';
+import About from './pages/About';
 import Login from './pages/Login';
 import Navbar from './components/Navbar/Navbar';
 import Register from './pages/Register';
@@ -45,6 +46,7 @@ function App() {
         <AnimatePresence mode='wait'>
           <Routes location={location} key={location.pathname}>
             <Route path='/' element={<Home user={user} />} />
+            <Route path='/about' element={<About />} />
             <Route path='/login' element={!user ? <Login /> : <Navigate to='/me' />} />
             <Route path='/register' element={!user ? <Register /> : <Navigate to='/' />} />
             <Route path='/me' element={user ? <MyAccount /> : <Navigate to='/' /> } />
