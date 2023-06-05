@@ -5,12 +5,12 @@ type Token = null | string;
 let token: Token = null;
 
 function setUser(user: User) {
-  window.localStorage.setItem('userLoggedin', JSON.stringify(user));
+  window.localStorage.setItem('userLoggedIn', JSON.stringify(user));
   token = user.token;
 }
 
 function checkIfUserLoggedIn() {
-  const loggedIn = window.localStorage.getItem('userLoggedin');
+  const loggedIn = window.localStorage.getItem('userLoggedIn');
 
   if (loggedIn) {
     const user: User = JSON.parse(loggedIn);

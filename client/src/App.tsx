@@ -30,7 +30,7 @@ function App() {
     if (userInStorage) {
       dispatch(login(userInStorage));
     }
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
