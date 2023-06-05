@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -14,28 +11,25 @@ export default {
         textboxDark: '#35383a',
       },
       screens: {
-        xss: '450px'
+        xss: '450px',
       },
-      fontFamily: 
-      {
-        mono_space: ['Space Mono', 'monospace']
+      fontFamily: {
+        mono_space: ['Space Mono', 'monospace'],
       },
       fontSize: {
-        tiny: '0.6rem'
+        tiny: '0.6rem',
       },
-      keyframes : 
-      {
-        altBounce: 
-        {
-          '0%': {transform: 'translateY(0%)'},
-          '50%': {transform: 'translateY(-25%)'},
-          '95%': {transform: 'translateY(2%)'}
+      keyframes: {
+        altBounce: {
+          '0%': { transform: 'translateY(0%)' },
+          '50%': { transform: 'translateY(-25%)' },
+          '95%': { transform: 'translateY(2%)' },
         },
       },
-      animation : {
+      animation: {
         'alt-bounce': 'altBounce 1s infinite',
       },
     },
   },
   plugins: [],
-}
+};

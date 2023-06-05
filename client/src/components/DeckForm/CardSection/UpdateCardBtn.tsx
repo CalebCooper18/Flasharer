@@ -1,51 +1,75 @@
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from '../../../app/hooks';
 
-import { updateCard } from "../../../app/reducers/cardsReducer";
-import { createAndDeleteNotification } from "../../../app/reducers/notificationReducer";
+import { updateCard } from '../../../app/reducers/cardsReducer';
+import { createAndDeleteNotification } from '../../../app/reducers/notificationReducer';
 
 interface Props {
-    tempId: string,
-    subject: string,
-    answer: string,
-    clearCardsFields: () => void;
-    setCardId: React.Dispatch<React.SetStateAction<string>>;
+  tempId: string;
+  subject: string;
+  answer: string;
+  clearCardsFields: () => void;
+  setCardId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function UpdateCardBtn({tempId, subject, answer, clearCardsFields, setCardId}: Props) {
+export default function UpdateCardBtn({
+  tempId,
+  subject,
+  answer,
+  clearCardsFields,
+  setCardId,
+}: Props) {
   const dispatch = useAppDispatch();
 
-  function handleClick()
-  {
-    if(!subject || !answer) {
-      dispatch(createAndDeleteNotification({
-        type: 'error',
-        message: 'Missing subject or answer field'
-      }));
+  function handleClick() {
+    if (!subject || !answer) {
+      dispatch(
+        createAndDeleteNotification({
+          type: 'error',
+          message: 'Missing subject or answer field',
+        })
+      );
       return;
     }
 
-      dispatch(updateCard({
+    dispatch(
+      updateCard({
         tempId,
         subject,
-        answer
-      }));
-      clearCardsFields();
-      setCardId('');
-      dispatch(createAndDeleteNotification({
+        answer,
+      })
+    );
+    clearCardsFields();
+    setCardId('');
+    dispatch(
+      createAndDeleteNotification({
         type: 'Success',
-        message: 'Card updated'
-      }));
+        message: 'Card updated',
+      })
+    );
   }
 
   return (
-    <div className="w-full">
-      <button type="button" disabled={!!!tempId} className={`form-card-button-template bg-semiLightPurple ${!tempId ? 
-      'disabled:cursor-not-allowed disabled:opacity-20': 
-      'hover:bg-purple-800 active:bg-purple-900 group'}`} onClick={handleClick}>
-          <span className="group-active:opacity-0 transition-all duration-200">Edit Card</span>
-          <span className="absolute -translate-y-24 left-1/2 -translate-x-1/2 group-active:translate-y-0
-          transition-all duration-200">Card Updated</span>
+    <div className='w-full'>
+      <button
+        type='button'
+        disabled={!tempId}
+        className={`form-card-button-template bg-semiLightPurple ${
+          !tempId
+            ? 'disabled:cursor-not-allowed disabled:opacity-20'
+            : 'hover:bg-purple-800 active:bg-purple-900 group'
+        }`}
+        onClick={handleClick}
+      >
+        <span className='group-active:opacity-0 transition-all duration-200'>
+          Edit Card
+        </span>
+        <span
+          className='absolute -translate-y-24 left-1/2 -translate-x-1/2 group-active:translate-y-0
+          transition-all duration-200'
+        >
+          Card Updated
+        </span>
       </button>
     </div>
-  )
+  );
 }

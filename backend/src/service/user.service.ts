@@ -1,44 +1,45 @@
-import User, {IUser, IUserDocument} from "../models/user";
+import User, { IUser, IUserDocument } from '../models/user';
 
+export async function createUser(userInput: IUser): Promise<IUserDocument> {
+  const user = new User({
+    username: userInput.username,
+    name: userInput.name,
+    password: userInput.password,
+    decks: [],
+  });
 
-export async function createUser(userInput: IUser): Promise<IUserDocument>
-{
-        const user = new User({
-            username: userInput.username,
-            name: userInput.name,
-            password: userInput.password,
-            decks: []
-        })
+  await user.save();
 
-        await user.save();
-        
+  const loggedInUser = await User.findOne({ username: userInput.username });
 
-        const loggedInUser = await User.findOne({ username: userInput.username }); 
+  if (!loggedInUser) {
+    throw new Error('Internal Error');
+  }
 
-        if(!loggedInUser)
-        {
-            throw new Error('Internal Error')
-        }
-        
-        return loggedInUser;
-        
+  return loggedInUser;
 }
 
-export async function loginUser({username, password}: {username: string, password: string}) 
-{
-    const user = await User.findOne({username});
-    
-    if(!user)
-    {
-        return false;
-    }
+export async function loginUser({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) {
+  const user = await User.findOne({ username });
 
-    const validatedPassword = await user.comparePasswords(password, user.password);
+  if (!user) {
+    return false;
+  }
 
-    if(!validatedPassword)
-    {
-        return false;
-    }
+  const validatedPassword = await user.comparePasswords(
+    password,
+    user.password
+  );
 
-    return user;
+  if (!validatedPassword) {
+    return false;
+  }
+
+  return user;
 }
